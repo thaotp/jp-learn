@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  speech_audio_id: 1
+  segments: MyString
+  content: MyString
+
+two:
+  speech_audio_id: 1
+  segments: MyString
+  content: MyString

@@ -1,0 +1,33 @@
+/*
+ * Some global variables that need to be present before
+ * other things are initialized.
+ */
+// Setup the global JP object
+var JP = {};
+var routeStore = [];
+JP.appLoaded = false;
+
+JP.Collections = {};
+JP.Controllers = {};
+JP.Flash = {};
+JP.Globals = {};
+JP.Helpers = {};
+JP.Models = {};
+JP.Templates = window.JST; // rails template system
+JP.Views = {};
+
+JP.Globals.assetsPath = '<%= Rails.configuration.assets.prefix %>' + '/';
+JP.Globals.Assets = {};
+JP.Assets = JP.Globals.Assets;
+JP.Globals.env = '<%= Rails.env %>';
+JP.Globals.contentElement = '[data-component="content"]';
+
+JP.Globals.apiPath = function(relativePath) {
+    var prefix = '/api/v1';
+
+    if (relativePath.charAt(relativePath.length) !== '/') { relativePath = relativePath + '/'; }
+
+    return relativePath.charAt(0) === '/' ? prefix + relativePath : prefix + '/' + relativePath;
+};
+
+JP.Times = 29
