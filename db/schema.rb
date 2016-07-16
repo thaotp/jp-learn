@@ -38,9 +38,9 @@ ActiveRecord::Schema.define(version: 20160714083158) do
     t.string   "romanji"
     t.string   "mean"
     t.string   "name_jp"
-    t.integer  "times"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "times",      default: 0
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
     t.integer  "lesson"
     t.string   "kanji"
   end

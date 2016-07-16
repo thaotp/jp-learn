@@ -33,6 +33,7 @@ word_1 = "わたし わたし I
 どうぞよろしく（お願いします） どうぞよろしく（おねがいします） Pleased to meet you
 こちらは～さんです こちらは～さんです This is Mr. (Ms.) ~
 ～から来ました ～からきました I came (come) from ~"
+LESSON = 1
 namespace :word do
   namespace :import do
     desc "This task is to import word."
@@ -43,7 +44,7 @@ namespace :word do
         name = word_groups[0]
         name_jp = word_groups[1]
         mean = word_groups[2..-1].join(' ')
-        words << {name: name, name_jp: name_jp, mean: mean}
+        words << {name: name, name_jp: name_jp, mean: mean, lesson: LESSON}
       end
       p words
       Word.create(words)

@@ -5,7 +5,7 @@ class CreateWords < ActiveRecord::Migration
       t.string :romanji
       t.string :mean
       t.string :name_jp
-      t.integer :times
+      t.integer :times, default: 0
 
       t.timestamps null: false
     end
