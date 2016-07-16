@@ -62,6 +62,9 @@ Rails.application.routes.draw do
 
   scope "/api/v1" do
     resources :words, :defaults => { :format => 'json' } do
+      collection do
+        put 'sync'
+      end
     end
     resources :radicals, :defaults => { :format => 'json' } do
     end
