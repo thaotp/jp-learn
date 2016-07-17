@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160714083158) do
+ActiveRecord::Schema.define(version: 20160717022155) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,6 +20,23 @@ ActiveRecord::Schema.define(version: 20160714083158) do
     t.string   "name"
     t.string   "romanji"
     t.integer  "status",     default: 0, null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  create_table "kanjis", force: :cascade do |t|
+    t.string   "name"
+    t.string   "mean"
+    t.string   "onyomi"
+    t.string   "kunjomi"
+    t.string   "romaji"
+    t.text     "explain"
+    t.integer  "times",      default: 0
+    t.text     "vn_mean"
+    t.string   "image"
+    t.string   "radical"
+    t.string   "stroke"
+    t.string   "elements"
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
   end

@@ -21,6 +21,7 @@ $(function() {
       'word/': 'wordRoute',
       'radical': 'radicalsRoute',
       'radical/': 'radicalsRoute',
+      'kanji/edit': 'editKanjiRoute',
     },
 
     initialize: function() {
@@ -31,7 +32,6 @@ $(function() {
       });
 
       this.listenTo(JP.state, 'change:loading', function() {
-        console.log(88)
         if (JP.state.get('loading')) {
 
         } else {
@@ -49,7 +49,6 @@ $(function() {
         delete this.currentView;
       }
       JP.state.set('loading', true)
-      console.log(77)
       $('html').attr('class', this.htmlClasses);
     },
 
@@ -87,6 +86,10 @@ $(function() {
 
     radicalsRoute: function() {
       this.currentView = new JP.Views.IndexRadicalView();
+    },
+
+    editKanjiRoute: function(){
+      this.currentView = new JP.Views.EditKanjiView();
     },
   });
 

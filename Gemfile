@@ -61,3 +61,4 @@ gem 'carrierwave'
 gem 'rest-client'
 gem 'nokogiri'
 gem 'mechanize'
+gem "http"

@@ -18,6 +18,7 @@
  *= require bootstrap-select.min
  *= require sweet-alert.min
  *= require progressjs.min
+ *= require jquery-editable
  *= require login
  *= require page
  *= require_self

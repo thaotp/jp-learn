@@ -59,6 +59,7 @@ Rails.application.routes.draw do
   get '/words' => 'home#public'
   get '/word' => 'home#public'
   get '/radical' => 'home#public'
+  get '/kanji/edit' => 'home#public'
 
   scope "/api/v1" do
     resources :words, :defaults => { :format => 'json' } do
@@ -67,6 +68,9 @@ Rails.application.routes.draw do
       end
     end
     resources :radicals, :defaults => { :format => 'json' } do
+    end
+
+    resources :kanjis, :defaults => { :format => 'json' } do
     end
   end
 end

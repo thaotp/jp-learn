@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  onyomi: MyString
+  kunjomi: 
+  romaji: MyString
+  explain: MyText
+  times: 1
+  vn_mean: MyText
+  image: MyString
+  radical: MyString
+  elements: MyString
+
+two:
+  name: MyString
+  onyomi: MyString
+  kunjomi: 
+  romaji: MyString
+  explain: MyText
+  times: 1
+  vn_mean: MyText
+  image: MyString
+  radical: MyString
+  elements: MyString

@@ -21,6 +21,7 @@
 //= require sweet-alert.min
 //= require jquery.serializeObject.min
 //= require floatlabels.min.js
+//= require bootstrap-editable.min
 
 // Templates
 //= require_tree ./public/templates
@@ -38,7 +39,7 @@
 // Helpers
 // require_tree ./public/helpers
 
-// Controllers
+// Contrors
 //= require_tree ./public/controllers
 
 // Models
@@ -55,3 +56,4 @@
 
 // Qvoval App, should be last!
 //= require public/app
+$.fn.editable.defaults.mode = 'inline';

@@ -1,0 +1,46 @@
+<div style="background: #FFFEFB;" class="panel">
+  <div class="panel-body">
+    <% _.each(kanjis, function(kanji, index) { %>
+      <ruby style='padding-right: 5px;'>
+        <rb style='font-size: 20px;'>
+          <a href="#<%= kanji.id %>"><%= kanji.name %></a>
+        </rb>
+        <rp>/</rp>
+        <rt style='font-size: 14px;'><%= kanji.romaji %></rt>
+      </ruby>
+    <% }) %>
+    <% _.each(kanjis, function(kanji, index) { %>
+      <div id="<%= kanji.id %>" class='row' style='margin-bottom: 10px;'>
+        <div class='col-sm-1'>
+          <ruby>
+            <rb>
+              <a href="#<%= kanji.id %>" style='font-size: 50px; font-weight: bold; text-decoration: none;'> <%= kanji.name %> </a>
+            </rb>
+            <rp>/</rp>
+            <rt style='font-size: 18px; font-weight: bold; color: black; text-transform: uppercase;'>
+              <%= kanji.romaji %>
+            </rt>
+        </div>
+        <div class='col-sm-1'>
+          <img src="<%= kanji.image %>" height="100" width="100">
+        </div>
+        <div class='col-sm-3'>
+          <div class='js-explain' data-id="<%= kanji.id %>"  style="word-wrap: break-word; font-size: 15px; color: black; border-bottom: none;">
+            <%= kanji.explain %>
+          </div>
+        </div>
+        <div class='col-sm-5'>
+          <p><span>On: </span> <span style='font-weight: bold; color: black;'><%= kanji.onyomi %></span></p>
+          <p><span>Kun: </span> <span style='font-weight: bold; color: black;'><%= kanji.kunjomi %></span></p>
+          <p style='border-bottom: 1px solid;'>
+            Radical: <%= kanji.radical %>  Stroke: <%= kanji.stroke %>  Elements: <%= kanji.elements %>
+          </p>
+        </div>
+        <div class='col-sm-2'>
+          <p><span>-  </span><span style='font-weight: bold; color: black;'><%= kanji.mean %></span></p>
+          <p><span>-  </span><span style='font-weight: bold; color: black;'><%= kanji.vn_mean %></span></p>
+        </div>
+      </div>
+    <% }) %>
+  </div>
+</div>
