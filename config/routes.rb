@@ -60,6 +60,7 @@ Rails.application.routes.draw do
   get '/word' => 'home#public'
   get '/radical' => 'home#public'
   get '/kanji/edit' => 'home#public'
+  get '/kanji/write' => 'home#public'
 
   scope "/api/v1" do
     resources :words, :defaults => { :format => 'json' } do

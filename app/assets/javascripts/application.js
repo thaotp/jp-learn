@@ -22,6 +22,7 @@
 //= require jquery.serializeObject.min
 //= require floatlabels.min.js
 //= require bootstrap-editable.min
+//= require drawingboard.min
 
 // Templates
 //= require_tree ./public/templates

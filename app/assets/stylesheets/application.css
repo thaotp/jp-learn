@@ -19,6 +19,7 @@
  *= require sweet-alert.min
  *= require progressjs.min
  *= require jquery-editable
+ *= require drawingboard.min
  *= require login
  *= require page
  *= require_self

@@ -22,6 +22,7 @@ $(function() {
       'radical': 'radicalsRoute',
       'radical/': 'radicalsRoute',
       'kanji/edit': 'editKanjiRoute',
+      'kanji/write': 'writeKanjiRoute',
     },
 
     initialize: function() {
@@ -91,6 +92,11 @@ $(function() {
     editKanjiRoute: function(){
       this.currentView = new JP.Views.EditKanjiView();
     },
+
+    writeKanjiRoute: function(){
+      this.currentView = new JP.Views.WriteKanjiView();
+    },
+
   });
 
 });
