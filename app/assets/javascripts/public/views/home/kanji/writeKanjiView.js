@@ -9,7 +9,8 @@ $(function() {
   JP.Views.WriteKanjiView = Backbone.View.extend({
 
     events: {
-      'click .js-reset': 'resetBackground',
+      'click .js-click': 'changeKanji',
+      'click .js-easer': 'easerBackground',
     },
 
     template: JP.Templates['public/templates/kanji/write'],
@@ -22,10 +23,10 @@ $(function() {
 
     onReady: function() {
       this.render();
-      var simpleBoard = new DrawingBoard.Board('simple-board', {
+      this.simpleBoard = new DrawingBoard.Board('simple-board', {
         controls: false,
         webStorage: false,
-        size: 2
+        size: 5
       });
       this.bindEvents();
     },
@@ -70,6 +71,24 @@ $(function() {
 
     },
 
+    changeKanji: function(e){
+      e.preventDefault();
+      this.simpleBoard.resetBackground();
+      var id = $(e.currentTarget).data('id')
+      var model = this.collection.get(id)
+      this.$('.js-x').each(function(index, el){
+        var kind = $(el).data('kind')
+        $(el).html(model.get(kind))
+        if(kind=='image'){
+          $(el).attr("src", model.get(kind));
+        }
+      });
+    },
+
+    easerBackground: function(e){
+      e.preventDefault();
+      this.simpleBoard.resetBackground()
+    },
 
     onClose: function() {
       this.unbindEvents();

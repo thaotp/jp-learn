@@ -4,7 +4,7 @@
       <% _.each(kanjis, function(kanji, index) { %>
         <ruby style='padding-right: 5px;'>
           <rb style='font-size: 20px;'>
-            <a href="#<%= kanji.id %>"><%= kanji.name %></a>
+            <a href="" data-id="<%=kanji.id%>" class='js-click'><%= kanji.name %></a>
           </rb>
           <rp>/</rp>
           <rt style='font-size: 14px;'><%= kanji.romaji %></rt>
@@ -13,22 +13,35 @@
     </div>
     <div class='row'>
       <div class='col-sm-4'>
-        <h3>
+        <h3 class='js-x' data-kind='explain'>
           <%= kanjis[0].explain %>
         </h3>
+        <p class='js-x' data-kind='mean'>
+          <%= kanjis[0].mean %>
+        </p>
+        <p class='js-x' data-kind='vn_mean'>
+          <%= kanjis[0].vn_mean %>
+        </p>
+        <button type="button" style="position: absolute;bottom: -285px;right: 100px;" class="js-easer btn btn-floating btn-success"><i class="icon wb-pencil" aria-hidden="true"></i></button>
       </div>
       <div class='col-sm-8'>
         <div>
           <div class="row">
             <div class='col-sm-9'>
-            <p><span>On: </span> <span style='font-weight: bold; color: black;'><%= kanjis[0].onyomi %></span></p>
-              <p><span>Kun: </span> <span style='font-weight: bold; color: black;'><%= kanjis[0].kunjomi %></span></p>
+            <p><span>On: </span> <span class='js-x' data-kind='onyomi' style='font-weight: bold; color: black;'><%= kanjis[0].onyomi %></span></p>
+              <p style="height: 66px;"><span>Kun: </span> <span class='js-x' data-kind='kunjomi' style='font-weight: bold; color: black;'><%= kanjis[0].kunjomi %></span></p>
               <p>
-                Radical: <%= kanjis[0].radical %>  Stroke: <%= kanjis[0].stroke %>  Elements: <%= kanjis[0].elements %>
+                Radical: <span class='js-x' data-kind='radical'><%= kanjis[0].radical %></span>  Stroke: <span class='js-x' data-kind='stroke'><%= kanjis[0].stroke %></span>  Elements: <span class='js-x' data-kind='elements'> <%= kanjis[0].elements %> </span>
               </p>
             </div>
             <div class='col-sm-3' style="text-align: right;">
-              <img class='js-imagex' src="<%= kanjis[0].image %>" height="100" width="100">
+              <ruby style='padding-right: 5px;'>
+                <rb>
+                  <img class='js-x' data-kind='image' src="<%= kanjis[0].image %>" height="80" width="80">
+                </rb>
+                <rp>/</rp>
+                <rt class='js-x' data-kind='romaji' style='font-size: 20px; font-weight: bold; color: black; text-transform: uppercase;'><%= kanjis[0].romaji %></rt>
+              </ruby>
             </div>
           </div>
         </div>
