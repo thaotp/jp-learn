@@ -24,7 +24,7 @@
 
 <script type="text/javascript">
   $(function() {
-    JP.Times = parseInt("<%= ENV['TIMES'] || '19' %>");
+    JP.Times = parseInt("<%= @times || ENV['TIMES'] %>");
     JP.Editable = <%= Rails.env.development? || false %>
     JP.events.trigger('appLoaded');
   });

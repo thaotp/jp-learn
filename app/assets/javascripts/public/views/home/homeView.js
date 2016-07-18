@@ -56,7 +56,7 @@ $(function() {
       var type = null;
 
       this.collection = new JP.Collections.Words();
-      var req = this.collection.fetch();
+      var req = this.collection.fetch({ data: $.param({ times: JP.Times}) });
 
       req.fail(function() {
         console.log("fail")

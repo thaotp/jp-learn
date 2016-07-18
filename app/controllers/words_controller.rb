@@ -1,7 +1,8 @@
 class WordsController < ApplicationController
   protect_from_forgery :except => [:sync]
   def index
-    words = Word.where('times < ?', ENV['TIMES'])
+    @times = params[:times] || ENV['TIMES']
+    words = Word.where('times < ?', @times)
     render json: words
   end
 
@@ -28,6 +29,7 @@ class WordsController < ApplicationController
       word_u.update(times: word[:times]) if word.present?
     end
     render json: Word.all, status: 200
+
   end
 
   private
