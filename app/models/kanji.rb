@@ -42,6 +42,7 @@ class Kanji < ActiveRecord::Base
 
     self.kunjomi = page.css('.k-readings .kana').try(:text).split(' ').select(&:contains_hiragana?).join(', ')
     self.mean = page.css('.k-lng-en').try(:text)
+    self.example_tb = page.css('.k-compounds-table').try(:inner_html)
 
     infos = page.css('.k-info').first.try(:text).split(' ')
 

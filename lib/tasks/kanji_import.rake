@@ -9,3 +9,18 @@ namespace :kanji do
     end
   end
 end
+
+JP_URL = 'http://tangorin.com/kanji/'
+namespace :kanji do
+  namespace :example do
+    desc "This task is to create example kanji."
+    task :execute => :environment do
+      Kanji.all.select(:example_tb.blank?).each do |kanji|
+        url = URI.encode "#{JP_URL}#{kanji.name}"
+        page = Nokogiri::HTML(open(url))
+        kanji.example_tb = page.css('.k-compounds-table').try(:inner_html)
+        kanji.save
+      end
+    end
+  end
+end

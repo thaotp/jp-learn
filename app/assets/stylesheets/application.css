@@ -22,16 +22,6 @@
  *= require drawingboard.min
  *= require login
  *= require page
+ *= require common
  *= require_self
  */
-.js-input{
-  height: 200px;
-  font-size: 90px;
-}
-.js-mean{
-  font-size: 40px;
-  color: black;
-}
-.js-kanji{
-  font-size: 40px;
-}
