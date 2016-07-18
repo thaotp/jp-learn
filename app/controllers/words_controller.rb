@@ -1,7 +1,7 @@
 class WordsController < ApplicationController
   protect_from_forgery :except => [:sync]
   def index
-    words = Word.all
+    words = Word.where('times < ?', ENV['TIMES'])
     render json: words
   end
 
