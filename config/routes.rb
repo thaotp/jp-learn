@@ -73,5 +73,9 @@ Rails.application.routes.draw do
 
     resources :kanjis, :defaults => { :format => 'json' } do
     end
+
+    resources :sentences, :defaults => { :format => 'json' } do
+    end
+
   end
 end

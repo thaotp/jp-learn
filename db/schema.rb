@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160718031744) do
+ActiveRecord::Schema.define(version: 20160721142101) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,6 +52,15 @@ ActiveRecord::Schema.define(version: 20160718031744) do
     t.string   "china"
   end
 
+  create_table "sentences", force: :cascade do |t|
+    t.string   "content"
+    t.string   "hiragana"
+    t.string   "mean"
+    t.string   "lesson"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "words", force: :cascade do |t|
     t.string   "name"
     t.string   "romanji"
@@ -62,6 +71,7 @@ ActiveRecord::Schema.define(version: 20160718031744) do
     t.datetime "updated_at",             null: false
     t.integer  "lesson"
     t.string   "kanji"
+    t.string   "kanji_note"
   end
 
 end

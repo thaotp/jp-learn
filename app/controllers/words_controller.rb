@@ -35,6 +35,6 @@ class WordsController < ApplicationController
   private
 
   def permit_params
-    params.require(:word).permit(:name, :name_jp, :mean, :lesson, :times)
+    params.require(:word).permit(:name, :name_jp, :mean, :lesson, :times, :kanji_note)
   end
 end

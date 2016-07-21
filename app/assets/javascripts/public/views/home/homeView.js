@@ -101,7 +101,13 @@ $(function() {
       });
 
       this.$('.js-word-wrap').append(wordView.render().el);
-
+      this.$('.js-kanji-note').editable({
+        type: 'text',
+        success: function(response, newValue) {
+          model.set('kanji_note', newValue)
+          if(JP.Editable) model.save()
+        }
+      });
 
       return wordView;
     },
