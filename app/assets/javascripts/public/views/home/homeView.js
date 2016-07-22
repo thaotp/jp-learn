@@ -109,6 +109,14 @@ $(function() {
         }
       });
 
+      this.$('.js-hint').editable({
+        type: 'text',
+        success: function(response, newValue) {
+          model.set('hint', newValue)
+          if(JP.Editable) model.save()
+        }
+      });
+
       return wordView;
     },
 

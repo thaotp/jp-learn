@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160721142101) do
+ActiveRecord::Schema.define(version: 20160722040333) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -72,6 +72,7 @@ ActiveRecord::Schema.define(version: 20160721142101) do
     t.integer  "lesson"
     t.string   "kanji"
     t.string   "kanji_note"
+    t.string   "hint"
   end
 
 end
