@@ -1,6 +1,7 @@
 class Word < ActiveRecord::Base
   before_create :set_romanji, :set_kanji, :set_times
   validates_presence_of :name
+  scope :random, -> { order("RANDOM()").limit(1).first }
   def set_romanji
     self.romanji = self.name_jp.romaji
   end
@@ -11,5 +12,9 @@ class Word < ActiveRecord::Base
 
   def set_times
     self.times = 0
+  end
+
+  def to_rep
+    {title: self.name || '', message: self.hint || '', type: 'word'}
   end
 end

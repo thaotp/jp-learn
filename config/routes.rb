@@ -77,5 +77,8 @@ Rails.application.routes.draw do
     resources :sentences, :defaults => { :format => 'json' } do
     end
 
+    resources :randoms, :defaults => { :format => 'json' } do
+    end
+
   end
 end
