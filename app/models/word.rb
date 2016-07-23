@@ -15,6 +15,6 @@ class Word < ActiveRecord::Base
   end
 
   def to_rep
-    {title: self.try(:name) || '', message: self.try(:hint) || '', type: 'word'}
+    {title: "#{self.try(:name)} (#{self.name_jp})" || '', message: self.try(:hint) || self.try(:mean), type: 'word'}
   end
 end
