@@ -105,7 +105,7 @@ $(function() {
         type: 'text',
         success: function(response, newValue) {
           model.set('kanji_note', newValue)
-          if(JP.Editable) model.save()
+          model.save()
         }
       });
 
