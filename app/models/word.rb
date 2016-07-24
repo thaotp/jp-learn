@@ -1,7 +1,7 @@
 class Word < ActiveRecord::Base
   before_create :set_romanji, :set_kanji, :set_times
   validates_presence_of :name
-  scope :random, -> { order("RANDOM()").limit(1).first }
+  scope :random, -> { order(updated_at: :asc).limit(1).first }
   def set_romanji
     self.romanji = self.name_jp.romaji
   end
@@ -15,6 +15,7 @@ class Word < ActiveRecord::Base
   end
 
   def to_rep
+    self.touch
     {title: "#{self.try(:name)} (#{self.name_jp})" || '', message: self.try(:hint) || self.try(:mean), type: 'word'}
   end
 end
