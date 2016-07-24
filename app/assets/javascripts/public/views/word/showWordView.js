@@ -60,11 +60,12 @@ $(function() {
         }else{
           this.$('.js-input').addClass('animated shake')
         }
-        if(times > JP.Times){
+        if(times >= JP.Times){
           var req = this.model.save();
           req.done(function(e) {
-            JP.events.trigger('next:word');
+
           });
+          JP.events.trigger('next:word');
         }
       }
     },

@@ -113,7 +113,7 @@ $(function() {
         type: 'text',
         success: function(response, newValue) {
           model.set('hint', newValue)
-          if(JP.Editable) model.save()
+          model.save()
         }
       });
 
