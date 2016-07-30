@@ -31,6 +31,16 @@ class Word < ActiveRecord::Base
     (Word.where.not(id: self.id).pluck(:mean).sample(3) << self.mean).shuffle
   end
 
-
+  def self.bulk_import(data, lesson)
+    words = []
+    data.split("\n").each do |word_group|
+      word_groups = word_group.split(" ")
+      name = word_groups[0]
+      name_jp = word_groups[1]
+      mean = word_groups[2..-1].join(' ')
+      words << {name: name, name_jp: name_jp, mean: mean, lesson: lesson}
+    end
+    self.create(words)
+  end
 
 end
