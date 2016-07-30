@@ -6,7 +6,7 @@ class RandomsController < ApplicationController
   end
 
   def quiz
-    render json: {words: Word.fetch_quiz(params[:lesson]).as_json, sentence: Sentence.random.as_json(:only => [:id, :name, :mean])}
+    render json: {words: Word.fetch_quiz(params[:lesson]).as_json, sentence: Sentence.random.as_json(:only => [:id, :content, :mean])}
   end
 
 end
