@@ -1,5 +1,6 @@
 class Sentence < ActiveRecord::Base
   scope :random, -> { order(updated_at: :asc).limit(1).first }
+  scope :top_three, -> { where(lesson: Word.uniq.pluck(:lesson).max(3)) }
 
   before_create :set_lesson
 

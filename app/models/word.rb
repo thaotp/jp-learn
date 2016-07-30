@@ -1,8 +1,9 @@
 class Word < ActiveRecord::Base
   before_create :set_romanji, :set_kanji, :set_times
   validates_presence_of :name
+  scope :top_three, -> { where(lesson: Word.uniq.pluck(:lesson).max(3)) }
   scope :random, -> { order(updated_at: :asc).limit(1).first }
-  scope :fetch_quiz, -> (lesson) { select(:id, :name, :name_jp, :mean).where(lesson: lesson).order(updated_at: :asc).limit(8) }
+  scope :fetch_quiz, -> { select(:id, :name, :name_jp, :mean).order(updated_at: :asc).limit(4) }
   def set_romanji
     self.romanji = self.name_jp.romaji
   end
@@ -27,7 +28,7 @@ class Word < ActiveRecord::Base
   end
 
   def quiz_options
-    (Word.pluck(:mean).sample(3) << self.mean).shuffle
+    (Word.where.not(id: self.id).pluck(:mean).sample(3) << self.mean).shuffle
   end
 
 
