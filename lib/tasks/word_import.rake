@@ -164,7 +164,7 @@ word_4 = "起きます おきます get up, wake up
 月曜日 げつようび Monday
 火曜日 かようび Tuesday
 水曜日 すいようび Wednesday
-木曜日もくようび Thursday
+木曜日 もくようび Thursday
 金曜日 きんようび Friday
 土曜日 どようび Saturday
 日曜日 にちようび Sunday
