@@ -1,3 +1,4 @@
+require 'csv'
 class Word < ActiveRecord::Base
   before_create :set_romanji, :set_kanji, :set_times
   validates_presence_of :name
@@ -45,6 +46,18 @@ class Word < ActiveRecord::Base
       words << {name: name, name_jp: name_jp, mean: mean, lesson: lesson}
     end
     self.create(words)
+  end
+
+  def self.to_csv
+
+    column_names = [:name_jp, :name, :mean]
+
+    file = CSV.open("#{Dir.pwd}/csv/bai-#{self.first.try(:lesson)}.csv", "w") do |csv|
+      all.each do |word|
+        csv << word.attributes.values_at(*column_names.map(&:to_s))
+      end
+    end
+    p "Done ..."
   end
 
 end
