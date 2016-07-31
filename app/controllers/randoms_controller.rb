@@ -2,7 +2,7 @@ class RandomsController < ApplicationController
   protect_from_forgery :except => [:sync]
   def index
     models = [Grammar]
-    render json: models.sample.top_three.random.to_rep
+    render json: models.sample.random.to_rep
   end
 
   def quiz
