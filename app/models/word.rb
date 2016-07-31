@@ -4,7 +4,7 @@ class Word < ActiveRecord::Base
   validates_presence_of :name
   scope :top_three, -> { where(lesson: Word.uniq.pluck(:lesson).max(self.max_lesson)) }
   scope :random, -> { order(updated_at: :asc).limit(1).first }
-  scope :fetch_quiz, -> { select(:id, :name, :name_jp, :mean, :kanji_note).order(updated_at: :asc).limit(4) }
+  scope :fetch_quiz, -> { select(:id, :name, :name_jp, :mean, :kanji_note, :romanji).order(updated_at: :asc).limit(4) }
   def set_romanji
     self.romanji = self.name_jp.romaji
   end
@@ -25,7 +25,7 @@ class Word < ActiveRecord::Base
 
   def as_json(options={})
     self.touch
-    super(:methods => [:quiz_options]
+    super(:methods => [:quiz_options, :kanji_export]
     )
   end
 
@@ -34,7 +34,11 @@ class Word < ActiveRecord::Base
   end
 
   def quiz_options
-    (Word.where.not(id: self.id).pluck(:mean).sample(3) << self.mean).shuffle
+    (Word.where.not(id: self.id).pluck(:name_jp).sample(3) << self.name_jp).shuffle
+  end
+
+  def kanji_export
+    self.kanji.gsub(',','')
   end
 
   def self.bulk_import(data, lesson)
