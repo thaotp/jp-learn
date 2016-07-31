@@ -4,13 +4,14 @@ class Word < ActiveRecord::Base
   validates_presence_of :name
   scope :top_three, -> { where(lesson: Word.uniq.pluck(:lesson).max(self.max_lesson)) }
   scope :random, -> { order(updated_at: :asc).limit(1).first }
-  scope :fetch_quiz, -> { select(:id, :name, :name_jp, :mean).order(updated_at: :asc).limit(4) }
+  scope :fetch_quiz, -> { select(:id, :name, :name_jp, :mean, :kanji_note).order(updated_at: :asc).limit(4) }
   def set_romanji
     self.romanji = self.name_jp.romaji
   end
 
   def set_kanji
-    self.kanji = self.name.chars.select(&:kanji?)
+    self.kanji = self.name.chars.select(&:kanji?).join(',')
+    set_kanji_note
   end
 
   def set_times
@@ -49,7 +50,6 @@ class Word < ActiveRecord::Base
   end
 
   def self.to_csv
-
     column_names = [:name_jp, :name, :mean]
 
     file = CSV.open("#{Dir.pwd}/csv/bai-#{self.first.try(:lesson)}.csv", "w") do |csv|
@@ -58,6 +58,25 @@ class Word < ActiveRecord::Base
       end
     end
     p "Done ..."
+  end
+
+  def set_kanji_note
+    if kanji.present?
+      kanjis = self.kanji.split(',')
+      note = []
+      kanjis.each do |kanji|
+        note << fetch_romaji(kanji)
+      end
+      self.kanji_note = note.join(',') if self.kanji_note.blank?
+    end
+  end
+
+  ROMAJI_URL = 'http://hvdic.thivien.net/word/'
+  def fetch_romaji name
+    url = URI.encode "#{ROMAJI_URL}#{name}"
+
+    page = Nokogiri::HTML(open(url))
+    page.css('.hvres-definition.single .hvres-spell').last.try(:text).to_s.try(:squish)
   end
 
 end
