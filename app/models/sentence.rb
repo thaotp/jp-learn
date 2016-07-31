@@ -13,5 +13,4 @@ class Sentence < ActiveRecord::Base
     {title: self.content || '', message: self.mean || '', type: 'sentence'}
   end
 
-
 end

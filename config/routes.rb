@@ -76,7 +76,8 @@ Rails.application.routes.draw do
 
     resources :sentences, :defaults => { :format => 'json' } do
     end
-
+    resources :settings, :defaults => { :format => 'json' } do
+    end
     resources :randoms, :defaults => { :format => 'json' } do
       get 'quiz', on: :collection
     end
