@@ -24,10 +24,13 @@ class Word < ActiveRecord::Base
     {title: "#{self.try(:name)} (#{self.name_jp})" || '', message: self.try(:hint) || self.try(:mean), type: 'word'}
   end
 
-  def as_json_as(options={})
-    self.touch
-    self.as_json(:methods => [:quiz_options, :kanji_export]
-    )
+  def self.as_json_as(options={})
+    transaction do
+      all.map do |word|
+        word.touch
+        word.as_json(:methods => [:quiz_options, :kanji_export])
+      end
+    end
   end
 
   def self.max_lesson
