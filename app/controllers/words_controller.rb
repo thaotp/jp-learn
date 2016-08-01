@@ -3,7 +3,7 @@ class WordsController < ApplicationController
   def index
     @times = params[:times] || ENV['TIMES']
     lesson = Setting.type_lesson.first.try(:value) || 5
-    words = Word.where(lesson: lesson)
+    words = Word.where(lesson: lesson).order(times: :asc)
     render json: words
   end
 
