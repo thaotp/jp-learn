@@ -2,7 +2,8 @@ class WordsController < ApplicationController
   protect_from_forgery :except => [:sync]
   def index
     @times = params[:times] || ENV['TIMES']
-    words = Word.where('times < ?', @times)
+    lesson = Setting.type_lesson.first.try(:value) || 5
+    words = Word.where(lesson: lesson)
     render json: words
   end
 
