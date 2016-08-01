@@ -24,9 +24,9 @@ class Word < ActiveRecord::Base
     {title: "#{self.try(:name)} (#{self.name_jp})" || '', message: self.try(:hint) || self.try(:mean), type: 'word'}
   end
 
-  def as_json(options={})
+  def as_json_as(options={})
     self.touch
-    super(:methods => [:quiz_options, :kanji_export]
+    self.as_json(:methods => [:quiz_options, :kanji_export]
     )
   end
 
