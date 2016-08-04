@@ -78,6 +78,8 @@ Rails.application.routes.draw do
     end
     resources :settings, :defaults => { :format => 'json' } do
     end
+    resources :shadows, :defaults => { :format => 'json' } do
+    end
     resources :randoms, :defaults => { :format => 'json' } do
       get 'quiz', on: :collection
     end
