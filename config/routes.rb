@@ -83,6 +83,7 @@ Rails.application.routes.draw do
     resources :randoms, :defaults => { :format => 'json' } do
       get 'quiz', on: :collection
       get 'boost', on: :collection
+      get 'read', on: :collection
     end
 
   end

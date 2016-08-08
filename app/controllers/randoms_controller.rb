@@ -9,6 +9,12 @@ class RandomsController < ApplicationController
     render json: {words: Word.top_three.fetch_quiz.as_json_as, sentence: Sentence.random.as_json(:only => [:id, :content, :mean])}
   end
 
+  def read
+    reader = Reader.newest
+    reader.touch
+    render json: reader
+  end
+
   def boost
     records = if params[:type] == 'grammar'
       Grammar.order(id: :desc)
