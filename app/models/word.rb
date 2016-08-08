@@ -62,6 +62,7 @@ class Word < ActiveRecord::Base
 
     file = CSV.open("#{Dir.pwd}/csv/bai-#{self.first.try(:lesson)}.csv", "w") do |csv|
       all.each do |word|
+        word.name = '' if word.kanji.blank?
         csv << word.attributes.values_at(*column_names.map(&:to_s))
       end
     end
