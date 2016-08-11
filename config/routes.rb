@@ -88,5 +88,7 @@ Rails.application.routes.draw do
       get 'read', on: :collection
     end
 
+    resources :grammars, only: [:show]
+
   end
 end

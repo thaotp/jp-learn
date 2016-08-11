@@ -6,12 +6,15 @@ class Grammar < ActiveRecord::Base
     {title: self.title || '', message: self.content || '', type: 'grammar'}
   end
 
-  def self.bulk_import data
-    records = data.split("\n")
-    grammars = []
-    records.each do |record|
-      grammars << {title: record.split(",")[0], content: record.split(",")[1]}
+  def self.import lesson, urls
+    grammar = {lesson: lesson, urls: []}
+    urls.each do |digest|
+      grammar[:urls] << make_url(digest)
     end
-    self.create! grammars
+    self.create! grammar
+  end
+
+  def self.make_url digest
+    "https://i.gyazo.com/#{digest}.png"
   end
 end
