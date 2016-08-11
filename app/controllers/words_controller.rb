@@ -44,6 +44,12 @@ class WordsController < ApplicationController
     end
   end
 
+  def search
+    key = params[:word]
+    words = Word.where('romanji LIKE ?', "#{key}%")
+    render json: words
+  end
+
   def sync
     params[:words].each do |word|
       word_u = Word.find(word[:id])
