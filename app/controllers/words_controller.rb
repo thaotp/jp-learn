@@ -7,6 +7,26 @@ class WordsController < ApplicationController
     render json: words
   end
 
+  def show
+    @word = Word.find(params[:id])
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render :pdf => "file_name",
+              layout: 'layouts/pdf.html.erb',
+              formats: [:pdf],
+              encoding: 'UTF-8',
+              save_to_file: Rails.root.join('csv', "123.pdf"),
+              header: {
+                :center => '',
+                :left => "",
+                :right => ""
+              },
+              show_as_html: params.key?('debug')
+      end
+    end
+  end
+
   def create
     if Word.create!(permit_params)
       render json: {}, status: 201

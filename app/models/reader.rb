@@ -18,4 +18,12 @@ class Reader < ActiveRecord::Base
 
     create!(data)
   end
+
+  def update_audio
+    return false if self.name.include?("u")
+    link = 'https://s3-us-west-2.amazonaws.com/jplearn/audio'
+    name_audio = self.name.split('-')[0..1].join('_')
+    self.audio_url = "#{link}/#{name_audio}.mp3"
+    self.save
+  end
 end

@@ -62,3 +62,5 @@ gem 'rest-client'
 gem 'nokogiri'
 gem 'mechanize'
 gem "http"
+gem 'wkhtmltopdf-binary', '~> 0.12.3'
+gem 'wicked_pdf'
