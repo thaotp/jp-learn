@@ -2,7 +2,7 @@
   .row
     .col-sm-12
       - @readers.each do |reader|
-        .col-sm-12
+        .col-sm-4
           = form_tag('/settings/1', class: 'form-inline', method: :put) do
             .form-group
               = hidden_field_tag 'reader_id', reader.id
