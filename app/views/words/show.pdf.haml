@@ -1,0 +1,3 @@
+.pdf-container.container
+  - @words.each do |word|
+    = render :partial => 'words/word.html.haml', locals: { word: word }

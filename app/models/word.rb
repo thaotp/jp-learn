@@ -88,4 +88,15 @@ class Word < ActiveRecord::Base
     page.css('.hvres-definition.single .hvres-spell').last.try(:text).to_s.try(:squish)
   end
 
+  def miss_word(name)
+    name.gsub!('～', '')
+    b_name = name.clone
+    length = name.length
+    positions = (1..length).to_a.sample((1..length).to_a.sample)
+    positions.each do |position|
+      b_name[position - 1] = '　'
+    end
+    b_name
+  end
+
 end

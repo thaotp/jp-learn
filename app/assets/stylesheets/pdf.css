@@ -1,0 +1,50 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ * require_tree .
+ *= require bootstrap
+ *= require_self
+ */
+
+/*@import url(https://fonts.googleapis.com/earlyaccess/notosansjapanese.css);*/
+@import url(//fonts.googleapis.com/css?family=Raleway+Dots);
+ html{
+  width: 1280px;
+ }
+ body{
+  font-family: 'Raleway Dots' !important; font-weight: 400;
+  font-style: normal;
+  font-size: 25px;
+  line-height: 30px;
+  color: #888;
+ }
+ .box{
+  border-right: 1px solid #888;
+  border-bottom: 1px solid #888;
+  padding-top: 3px;
+  padding-right: 3px;
+ }
+ .top .style{
+    color: #000;
+    font-weight: 200;
+  }
+  .box:after
+  {
+ /*   content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, transparent 50%, transparent 50%), radial-gradient(circle, transparent 40%, white 50%) 10px 10px;
+    background-size: 4px 4px;*/
+  }

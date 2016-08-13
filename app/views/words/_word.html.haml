@@ -1,0 +1,32 @@
+.row
+  .col-sm-12
+    %div.row
+      .top
+        %span.style
+          = word.id
+          \.
+        %ruby.style
+          %rb.text-style
+            = word.name
+          %rp /
+          %rt
+            = word.name_jp
+          \|
+        %span.style
+          = word.romanji
+          \|
+        %span.style
+          = word.mean
+          \|
+        %ruby.style
+          %rb.text-style
+            = word.kanji
+          %rp /
+          %rt
+            = word.kanji_note
+      - (1..44).each do |col_1|
+        .box{:class => "col-sm-#{3}"}
+          - if (col_1%4).even?
+            = word.miss_word(word.name)
+          - else
+            = word.miss_word(word.name_jp)

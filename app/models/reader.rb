@@ -1,12 +1,18 @@
 class Reader < ActiveRecord::Base
   scope :newest, -> { order(updated_at: :asc).limit(1).first }
 
-  def self.bulk_import(lesson = 1, amount = [0,0])
+  def self.bulk_import(lesson = 1, amount = [0,0,0])
     link = 'https://s3-us-west-2.amazonaws.com/jplearn/SentenceRead'
     b = "b-#{lesson}"
-    data = [{lesson: lesson, url: "#{link}/#{b}.png", name: b}]
+    if(Reader.exists?(name: b))
+      data = []
+    else
+      data = [{lesson: lesson, url: "#{link}/#{b}.png", name: b}]
+    end
+
     r = amount.first
-    u = amount.last
+    u = amount[1]
+    re = amount[2]
     (1..r).each do |el|
       r_el = "r-#{lesson}-#{el}"
       data << {lesson: lesson, url: "#{link}/#{r_el}.png", name: r_el}
@@ -14,6 +20,11 @@ class Reader < ActiveRecord::Base
     (1..u).each do |el|
       u_el = "u-#{lesson}-#{el}"
       data << {lesson: lesson, url: "#{link}/#{u_el}.png", name: u_el}
+    end
+
+    (1..re).each do |el|
+      re_el = "re-#{lesson}-#{el}"
+      data << {lesson: lesson, url: "#{link}/#{re_el}.png", name: re_el}
     end
 
     create!(data)

@@ -8,14 +8,19 @@ class WordsController < ApplicationController
   end
 
   def show
-    @word = Word.find(params[:id])
+    @words = Word.where(lesson: params[:lesson]).select do |word|
+      word.name_jp.length < 9
+    end
+
     respond_to do |format|
       format.html
       format.pdf do
-        render :pdf => "file_name",
+        render :pdf => "lesson_#{params[:lesson]}",
               layout: 'layouts/pdf.html.erb',
+              orientation: 'Landscape',
               formats: [:pdf],
               encoding: 'UTF-8',
+              viewport_size: '1280x1024',
               save_to_file: Rails.root.join('csv', "123.pdf"),
               header: {
                 :center => '',
@@ -64,4 +69,20 @@ class WordsController < ApplicationController
   def permit_params
     params.require(:word).permit(:name, :name_jp, :mean, :lesson, :times, :kanji_note, :hint)
   end
+
+  def cof_setting(text)
+    cof = {}
+    if (0..4).include? text.length
+      cof[:row] = 2
+      cof[:loop] = 6
+    elsif (5..6).include? text.length
+      cof[:row] = 3
+      cof[:loop] = 4
+    else
+      cof[:row] = 3
+      cof[:loop] = 3
+    end
+    cof
+  end
+
 end
