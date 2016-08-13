@@ -1,0 +1,21 @@
+.container
+  .row
+    .col-sm-12
+      - @readers.each do |reader|
+        .col-sm-12
+          = form_tag('/settings/1', class: 'form-inline', method: :put) do
+            .form-group
+              = hidden_field_tag 'reader_id', reader.id
+              %span
+                = reader.name
+              = link_to "Link", reader.url, target: "_blank"
+            .form-group
+              .radio-custom.radio-default.radio-inline
+                = radio_button_tag "show_#{reader.id}", true, reader.show, class: "color_input", id: 'falseShow'
+                %label{:for => "trueShow"} True
+              .radio-custom.radio-default.radio-inline
+                = radio_button_tag "show_#{reader.id}", false, !reader.show, class: "color_input", id: 'falseShow'
+                %label{:for => "falseShow"} False
+            .form-group
+              %button.btn.btn-primary.btn-outline{:type => "submit"} Update
+

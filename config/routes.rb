@@ -63,6 +63,9 @@ Rails.application.routes.draw do
   get '/kanji/write' => 'home#public'
 
   resources :words, only: [:show]
+  resources :settings do
+    get 'reader', on: :collection
+  end
 
   scope "/api/v1" do
     resources :words, :defaults => { :format => 'json' } do

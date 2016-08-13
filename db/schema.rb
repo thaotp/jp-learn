@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160811070158) do
+ActiveRecord::Schema.define(version: 20160813161538) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -66,9 +66,10 @@ ActiveRecord::Schema.define(version: 20160811070158) do
     t.string   "lesson"
     t.text     "url"
     t.string   "name"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
     t.string   "audio_url",  default: ""
+    t.boolean  "show",       default: true
   end
 
   create_table "sentences", force: :cascade do |t|
