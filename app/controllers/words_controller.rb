@@ -51,7 +51,7 @@ class WordsController < ApplicationController
 
   def search
     key = params[:word]
-    words = Word.where('romanji LIKE ? OR mean LIKE ?', "#{key}%", "#{key}%")
+    words = Word.where('romanji LIKE ? OR mean LIKE ?', "%#{key}%", "%#{key}%")
     render json: words
   end
 
