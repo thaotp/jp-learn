@@ -53,7 +53,8 @@ $(function() {
       this.$('.js-input').removeClass('animated shake')
       var times = this.model.get('times')
       if(e.keyCode == 13){
-        if($(e.currentTarget).val() == this.model.get('name').replace(/～/g, '')){
+        var value = $(e.currentTarget).val()
+        if( value == this.model.get('name').replace(/～/g, '') || value == this.model.get('romanji')){
           this.$('.js-times').html(+times + 1)
           this.model.set('times', + times + 1)
           $(e.currentTarget).val('')
