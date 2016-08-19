@@ -58,6 +58,7 @@ class WordsController < ApplicationController
   def lesson
     lesson = params[:lesson]
     words = Word.where(lesson: lesson).order(id: :asc)
+    render json: words
   end
 
   def sync
