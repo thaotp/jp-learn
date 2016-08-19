@@ -73,6 +73,7 @@ Rails.application.routes.draw do
         put 'sync'
       end
       get 'search', on: :collection
+      get 'lesson', on: :collection
     end
     resources :radicals, :defaults => { :format => 'json' } do
     end

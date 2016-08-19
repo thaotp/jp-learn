@@ -55,6 +55,11 @@ class WordsController < ApplicationController
     render json: words
   end
 
+  def lesson
+    lesson = params[:lesson]
+    words = Word.where(lesson: lesson).order(id: :asc)
+  end
+
   def sync
     params[:words].each do |word|
       word_u = Word.find(word[:id])
