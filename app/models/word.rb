@@ -99,4 +99,22 @@ class Word < ActiveRecord::Base
     b_name
   end
 
+  def ping_slack
+    message = ":point_right:` #{self.name}`  |  `#{self.name_jp}`  |  `#{self.romanji}`  |  `#{self.mean}`"
+    title = ":beauty:    #{self.name}"
+    SlackNotifier.ping(
+      attachments: [{
+        color: '#00E676',
+        pretext: "#{self.mean}  #{'----' * 20}",
+        # title: title,
+        mrkdwn: true,
+        text: message,
+        mrkdwn_in: ["text", "pretext"],
+        footer: "Slack API",
+        footer_icon: ":beauty:",
+        ts: Time.now.to_i
+      }]
+    )
+  end
+
 end
