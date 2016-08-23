@@ -28,7 +28,7 @@ class Sentence < ActiveRecord::Base
     message = ":point_right:` #{self.content}`  |  `#{self.lesson}`"
     SlackNotifier.ping(
       username: 'Let\'s Speak',
-      channel: 'speak-practise',
+      channel: 'aspeak-practise',
       attachments: [{
         color: '#00E676',
         # pretext: "#{self.mean}  #{'----' * 20}",
