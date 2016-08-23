@@ -111,7 +111,7 @@ class Word < ActiveRecord::Base
       username: 'Review',
       attachments: [{
         color: '#00E676',
-        pretext: "#{self.mean}  #{'----' * 20}",
+        pretext: "#{self.lesson}   #{self.mean} ",
         # title: title,
         mrkdwn: true,
         text: message,
