@@ -25,7 +25,7 @@ class Sentence < ActiveRecord::Base
   end
 
   def ping_slack
-    message = ":point_right: #{self.id}. `#{self.content}`  |  `#{self.lesson}`"
+    message = ":point_right: #{self.id}. `#{self.content}`"
     SlackNotifier.ping(
       username: 'Let\'s Speak',
       channel: 'aspeak-practise',
@@ -36,7 +36,7 @@ class Sentence < ActiveRecord::Base
         mrkdwn: true,
         text: message,
         mrkdwn_in: ["text", "pretext"],
-        # footer: "Slack API",
+        footer: "#{self.id} - #{self.lesson}",
         # footer_icon: ":beauty:",
         ts: Time.now.to_i
       }]

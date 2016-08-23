@@ -111,12 +111,12 @@ class Word < ActiveRecord::Base
       username: 'Review',
       attachments: [{
         color: '#00E676',
-        pretext: "#{self.id} - #{self.lesson}.   #{self.mean} ",
+        pretext: "   #{self.mean} ",
         # title: title,
         mrkdwn: true,
         text: message,
         mrkdwn_in: ["text", "pretext"],
-        footer: "Slack API",
+        footer: "#{self.id} - #{self.lesson}",
         footer_icon: ":beauty:",
         ts: Time.now.to_i
       }]
