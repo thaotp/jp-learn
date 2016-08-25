@@ -107,7 +107,7 @@ class Word < ActiveRecord::Base
     message = ":point_right:` #{self.name}`  |  `#{self.name_jp}`  |  `#{self.romanji}`  |  `#{self.mean}`"
     title = ":beauty:    #{self.name}"
     SlackNotifier.ping(
-      channel: 'areview-word',
+      channel: 'words',
       username: 'Review',
       attachments: [{
         color: '#00E676',
