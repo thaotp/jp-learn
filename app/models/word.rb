@@ -84,7 +84,7 @@ class Word < ActiveRecord::Base
     end
   end
 
-  ROMAJI_URL = 'http://hvdic.thivien.net/word/'
+  ROMAJI_URL = 'http://hvdic.thivien.net/whan/'
   def fetch_romaji name
     url = URI.encode "#{ROMAJI_URL}#{name}"
 
@@ -104,7 +104,7 @@ class Word < ActiveRecord::Base
   end
 
   def ping_slack
-    message = ":point_right:` #{self.name}`  |  `#{self.name_jp}`  |  `#{self.romanji}`  |  `#{self.mean}`"
+    message = ":point_right:` #{self.name}`  |  `#{self.name_jp}`  |  `#{self.romanji}`  |  `#{self.mean}` |  `#{self.kanji_note}`"
     title = ":beauty:    #{self.name}"
     SlackNotifier.ping(
       channel: 'words',
