@@ -2,8 +2,7 @@ namespace :scheduler do
   namespace :sentence do
     desc "This task is to ping to Slack Sentence"
     task :execute => :environment do
-
-
+      execute_sentence
     end
   end
 
@@ -12,6 +11,7 @@ namespace :scheduler do
     task :execute => :environment do
 
       # next if Delayed::Backend::ActiveRecord::Job.where(queue: 'radicals').present?
+      execute_radical
     end
   end
 
