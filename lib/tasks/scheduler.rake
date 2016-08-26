@@ -3,15 +3,7 @@ namespace :scheduler do
     desc "This task is to ping to Slack Sentence"
     task :execute => :environment do
 
-      next if Delayed::Backend::ActiveRecord::Job.where(queue: 'sentence').present?
 
-      unless( (Time.now.midnight + 2.hours .. Time.now.midnight + 7.hours).cover? Time.now )
-        sentences = Sentence.random_2
-        sentences.each do |sentence|
-          sentence.touch
-          sentence.delay(run_at: 20.minutes.from_now, queue: 'sentence').ping_slack
-        end
-      end
     end
   end
 
@@ -20,13 +12,35 @@ namespace :scheduler do
     task :execute => :environment do
 
       # next if Delayed::Backend::ActiveRecord::Job.where(queue: 'radicals').present?
+    end
+  end
 
-      unless( (Time.now.midnight + 2.hours .. Time.now.midnight + 7.hours).cover? Time.now )
-        radicals = Kanji.radicals.lastest
-        radicals.each do |radical|
-          radical.touch
-          radical.delay(run_at: 5.seconds.from_now, queue: 'radicals').ping_slack_radical
-        end
+  task :execute => :environment do
+    execute_radical
+    execute_sentence
+  end
+
+  def execute_radical
+    second = Setting.find_by(name: 'RadicalTask').try(:value) || 5
+    unless( (Time.now.midnight + 2.hours .. Time.now.midnight + 7.hours).cover? Time.now )
+      radicals = Kanji.radicals.lastest
+      radicals.each do |radical|
+        radical.touch
+        radical.delay(run_at: second.to_i.seconds.from_now, queue: 'radicals').ping_slack_radical
+      end
+    end
+  end
+
+  def execute_sentence
+    return if Delayed::Backend::ActiveRecord::Job.where(queue: 'sentence').present?
+    minute = Setting.find_by(name: 'SentenceTask').try(:value) || 20
+
+
+    unless( (Time.now.midnight + 2.hours .. Time.now.midnight + 7.hours).cover? Time.now )
+      sentences = Sentence.random_2
+      sentences.each do |sentence|
+        sentence.touch
+        sentence.delay(run_at: minute.to_i.minutes.from_now, queue: 'sentence').ping_slack
       end
     end
   end
