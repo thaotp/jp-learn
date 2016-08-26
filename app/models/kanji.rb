@@ -65,7 +65,7 @@ class Kanji < ActiveRecord::Base
     # message = "#{self.name}   -   #{self.romaji.capitalize}"
     message = ">  *#{self.name}*   -   *#{self.romaji.capitalize}* "
 
-    relations = Word.where('kanji LIKE ?', "%#{'家'}%").select{|c| c.name.length < 4}.take(3)
+    relations = Word.where('kanji LIKE ?', "%#{self.name}%").select{|c| c.name.length < 4}.take(3)
     appent_text = ""
     relations.each do |word|
       appent_text += "> • #{word.name}    -     #{word.name_jp}    -    #{word.mean}\n"
