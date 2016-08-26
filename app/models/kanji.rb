@@ -62,19 +62,26 @@ class Kanji < ActiveRecord::Base
   end
 
   def ping_slack_radical
-    message = "#{self.name}   -   #{self.romaji.capitalize}"
-    # message = ">  *#{self.name}*   -   *#{self.romaji.upcase}* "
+    # message = "#{self.name}   -   #{self.romaji.capitalize}"
+    message = ">  *#{self.name}*   -   *#{self.romaji.capitalize}* "
 
-    text = "`Nghĩa`:  _#{self.vn_mean}_ \n `Mean`:   _#{self.mean}_"
-    url = URI.encode "#{JP_URL}#{self.name}"
+    relations = Word.where('kanji LIKE ?', "%#{'家'}%").select{|c| c.name.length < 4}.take(3)
+    appent_text = ""
+    relations.each do |word|
+      appent_text += "> • #{word.name}    -     #{word.name_jp}    -    #{word.mean}\n"
+    end
+    url_vn = URI.encode "#{ROMAJI_URL}#{self.name}"
+    url_en = URI.encode "#{JP_URL}#{self.name}"
+    text = "<#{url_vn}|Nghĩa>:  _#{self.vn_mean}_ \n <#{url_en}|Mean>:   _#{self.mean}_"
+
     SlackNotifier.ping(
       channel: 'radical',
       username: self.name,
       attachments: [{
         color: '#00E676',
-        # pretext: message,
-        title: message,
-        title_link: url,
+        pretext: message,
+        # title: message,
+        # title_link: url,
         mrkdwn: true,
         text: text,
         thumb_url: self.image,
@@ -88,9 +95,14 @@ class Kanji < ActiveRecord::Base
               title: "Kunyomi",
               value: "#{self.kunjomi}",
               short: true
+            },
+            {
+              title: "Example",
+              value: "#{appent_text}",
+              short: false
             }
         ],
-        mrkdwn_in: ["text", "pretext", "title"],
+        mrkdwn_in: ["text", "pretext", "title", "fields"],
         footer: "#{self.id} - #{self.name}",
         footer_icon: ":beauty:",
         ts: Time.now.to_i
