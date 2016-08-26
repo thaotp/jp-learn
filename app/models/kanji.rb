@@ -1,7 +1,7 @@
 class Kanji < ActiveRecord::Base
   before_create :fetch_kanji
   validates_presence_of :name
-  default_scope { where.not(r_type: 'radical') }
+  scope :without_radicals, -> { where.not(r_type: 'radical') }
   scope :radicals, -> { where(r_type: 'radical') }
   scope :lastest, -> { order(updated_at: :asc).limit(1) }
 
