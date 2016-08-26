@@ -25,7 +25,7 @@ namespace :scheduler do
         radicals = Kanji.unscoped.radicals.lastest
         radicals.each do |radical|
           radical.touch
-          radical.delay(run_at: 1.second.from_now, queue: 'radicals').ping_slack_radical
+          radical.delay(run_at: 5.seconds.from_now, queue: 'radicals').ping_slack_radical
         end
       end
     end
