@@ -8,10 +8,9 @@ namespace :kanji do
       end
     end
   end
-end
 
-JP_URL = 'http://tangorin.com/kanji/'
-namespace :kanji do
+  JP_URL = 'http://tangorin.com/kanji/'
+
   namespace :example do
     desc "This task is to create example kanji."
     task :execute => :environment do
@@ -20,6 +19,19 @@ namespace :kanji do
         page = Nokogiri::HTML(open(url))
         kanji.example_tb = page.css('.k-compounds-table').try(:inner_html)
         kanji.save
+      end
+    end
+  end
+
+  RADICAL_48 = "水,人,手,木,心,口 言,糸,辶,土,艹,肉,阝,日,女,宀,貝,金 刀,火,竹,力,⽲,頁,衣,彳,田,目,大,巾,广,犬,一,山,攵,石,尸,玉,疒,示,車,酉,雨,囗,寸,食,十,弓".split(",")
+
+  namespace :radical_48 do
+    desc "This task is to import 48 raidical."
+    task :execute => :environment do
+      RADICAL_48.each do |kanji|
+        Kanji.transaction do
+          Kanji.create!(name: kanji, r_type: 'radical')
+        end
       end
     end
   end

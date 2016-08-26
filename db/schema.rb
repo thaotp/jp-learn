@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160822134123) do
+ActiveRecord::Schema.define(version: 20160826031305) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,6 +40,15 @@ ActiveRecord::Schema.define(version: 20160822134123) do
 
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
+  create_table "grammar_lists", force: :cascade do |t|
+    t.text     "content1"
+    t.text     "content2"
+    t.text     "content3"
+    t.boolean  "show",       default: true
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
   create_table "grammars", force: :cascade do |t|
     t.string   "title"
     t.string   "content"
@@ -63,10 +72,11 @@ ActiveRecord::Schema.define(version: 20160822134123) do
     t.string   "radical"
     t.string   "stroke"
     t.string   "elements"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
     t.text     "example_tb"
     t.string   "level"
+    t.string   "r_type",     default: ""
   end
 
   create_table "radicals", force: :cascade do |t|
