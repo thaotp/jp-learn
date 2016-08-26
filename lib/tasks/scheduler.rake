@@ -2,6 +2,9 @@ namespace :scheduler do
   namespace :sentence do
     desc "This task is to ping to Slack Sentence"
     task :execute => :environment do
+
+      next if Delayed::Backend::ActiveRecord::Job.where(queue: 'sentence').present?
+
       unless( (Time.now.midnight + 2.hours .. Time.now.midnight + 7.hours).cover? Time.now )
         sentences = Sentence.random_2
         sentences.each do |sentence|
@@ -15,6 +18,9 @@ namespace :scheduler do
   namespace :radicals do
     desc "This task is to ping to Slack Radical"
     task :execute => :environment do
+
+      # next if Delayed::Backend::ActiveRecord::Job.where(queue: 'radicals').present?
+
       unless( (Time.now.midnight + 2.hours .. Time.now.midnight + 7.hours).cover? Time.now )
         radicals = Kanji.unscoped.radicals.lastest
         radicals.each do |radical|
