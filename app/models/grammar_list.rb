@@ -10,4 +10,24 @@ class GrammarList < ActiveRecord::Base
       puts row
     end
   end
+
+  def ping_slack
+    message = "•    #{self.content2} \n •    #{self.content3}"
+    title = "•    #{self.content2}"
+    SlackNotifier.ping(
+      channel: 'grammar',
+      username: 'Grammar',
+      attachments: [{
+        color: '#00E676',
+        pretext: "   *#{self.content1}* ",
+        # title: title,
+        mrkdwn: true,
+        text: message,
+        mrkdwn_in: ["text", "pretext"],
+        footer: "#{self.id} - #{self.lesson}",
+        footer_icon: ":beauty:",
+        ts: Time.now.to_i
+      }]
+    )
+  end
 end
