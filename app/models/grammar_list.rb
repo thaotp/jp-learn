@@ -1,6 +1,7 @@
 require 'csv'
 require 'open-uri'
 class GrammarList < ActiveRecord::Base
+  scope :lastest, -> { order(updated_at: :asc).limit(1) }
   def self.import_csv
     url = 'https://s3-us-west-2.amazonaws.com/jplearn/grammar/test.csv'
     uri = URI(url)

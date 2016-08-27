@@ -41,7 +41,7 @@ namespace :scheduler do
     return if Delayed::Backend::ActiveRecord::Job.where(queue: 'grammar').present?
     minute = Setting.find_by(name: 'GrammarTask').try(:value) || 20
     unless( (Time.now.midnight + 2.hours .. Time.now.midnight + 7.hours).cover? Time.now )
-      grammars = Grammar.lastest
+      grammars = GrammarList.lastest
       grammars.each do |grammar|
         grammar.touch
         grammar.delay(run_at: minute.to_i.minutes.from_now, queue: 'grammar').ping_slack
