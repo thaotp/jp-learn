@@ -9,9 +9,14 @@ namespace :scheduler do
   namespace :radicals do
     desc "This task is to ping to Slack Radical"
     task :execute => :environment do
-
-      # next if Delayed::Backend::ActiveRecord::Job.where(queue: 'radicals').present?
       execute_radical
+    end
+  end
+
+  namespace :grammars do
+    desc "This task is to ping to Slack Grammar"
+    task :execute => :environment do
+      execute_grammar
     end
   end
 
