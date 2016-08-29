@@ -17,7 +17,7 @@ class GrammarList < ActiveRecord::Base
     title = "•    #{self.content2}"
     SlackNotifier.ping(
       channel: 'grammar',
-      username: 'Grammar #{self.lesson}',
+      username: "Grammar #{self.lesson}",
       attachments: [{
         color: '#00E676',
         pretext: "   *#{self.content1}* ",
