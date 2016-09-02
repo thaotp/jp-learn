@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160827104059) do
+ActiveRecord::Schema.define(version: 20160902234434) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -131,12 +131,15 @@ ActiveRecord::Schema.define(version: 20160827104059) do
     t.string   "mean"
     t.string   "name_jp"
     t.integer  "times",      default: 0
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.integer  "lesson"
     t.string   "kanji"
     t.string   "kanji_note"
     t.string   "hint"
+    t.boolean  "learned",    default: false
+    t.boolean  "show",       default: false
+    t.string   "vn_mean",    default: ""
   end
 
 end

@@ -1,9 +1,14 @@
 class WordsController < ApplicationController
   protect_from_forgery :except => [:sync]
   def index
-    @times = params[:times] || ENV['TIMES']
-    lesson = Setting.type_lesson.first.try(:value) || 5
-    words = Word.where(lesson: lesson).order(id: :asc)
+    if params[:mobile].present?
+      @times = params[:times] || ENV['TIMES']
+      lesson = Setting.type_lesson.first.try(:value) || 5
+      words = Word.where(lesson: lesson).order(id: :asc)
+    else
+       words = Word.where(show: true).where.not(learned: true).order(updated_at: :asc)
+    end
+
     render json: words
   end
 
