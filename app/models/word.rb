@@ -3,7 +3,7 @@ class Word < ActiveRecord::Base
   before_create :set_romanji, :set_kanji, :set_times
   validates_presence_of :name
   # Word.uniq.pluck(:lesson).max(self.max_lesson)
-  scope :top_three, -> { where(lesson: self.range_lesson) }
+  scope :top_three, -> { where(lesson: self.range_lesson).where(show: true) }
   scope :random, -> { order(updated_at: :asc).limit(1).first }
   scope :fetch_quiz, -> { select(:id, :name, :name_jp, :mean, :kanji_note, :romanji, :kanji).order(updated_at: :asc).limit(4) }
   def set_romanji
@@ -38,7 +38,8 @@ class Word < ActiveRecord::Base
   end
 
   def self.range_lesson
-    (8..self.max_lesson).to_a
+    # (8..self.max_lesson).to_a
+    (1..25).to_a
   end
 
   def quiz_options
