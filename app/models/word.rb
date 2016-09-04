@@ -5,7 +5,7 @@ class Word < ActiveRecord::Base
   # Word.uniq.pluck(:lesson).max(self.max_lesson)
   scope :top_three, -> { where(lesson: self.range_lesson).where(show: true) }
   scope :random, -> { order(updated_at: :asc).limit(1).first }
-  scope :fetch_quiz, -> { select(:id, :name, :name_jp, :mean, :kanji_note, :romanji, :kanji).order(updated_at: :asc).limit(4) }
+  scope :fetch_quiz, -> { select(:id, :name, :name_jp, :mean, :kanji_note, :romanji, :kanji, :vn_mean).order(updated_at: :asc).limit(4) }
   def set_romanji
     self.romanji = self.name_jp.romaji
   end
