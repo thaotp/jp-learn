@@ -5,6 +5,7 @@ class Word < ActiveRecord::Base
   # Word.uniq.pluck(:lesson).max(self.max_lesson)
   scope :top_three, -> { where(lesson: self.range_lesson).where(show: true) }
   scope :random, -> { order(updated_at: :asc).limit(1).first }
+  scope :not_vn_mean, -> { where(vn_mean: "") }
   scope :fetch_quiz, -> { select(:id, :name, :name_jp, :mean, :kanji_note, :romanji, :kanji, :vn_mean).order(updated_at: :asc).limit(4) }
   def set_romanji
     self.romanji = self.name_jp.romaji
@@ -50,6 +51,17 @@ class Word < ActiveRecord::Base
     self.kanji.gsub(',','')
   end
 
+  def self.import_csv(url)
+    data = []
+    csv_text = File.read(url)
+    csv = CSV.parse(csv_text.gsub(/\r/, ''), :headers=>false)
+    csv.each do |row|
+      # puts row[1]
+      data << {name_jp: row[0], name: row[1], mean: row[2], lesson: row[3]}
+    end
+    create!(data)
+  end
+
   def self.bulk_import(data, lesson)
     words = []
     data.split("\n").each do |word_group|
@@ -63,7 +75,7 @@ class Word < ActiveRecord::Base
   end
 
   def self.to_csv
-    column_names = [:name_jp, :name, :mean]
+    column_names = [:name_jp, :name, :mean, :lesson]
 
     file = CSV.open("#{Dir.pwd}/csv/bai-#{self.first.try(:lesson)}.csv", "w") do |csv|
       all.each do |word|
@@ -72,6 +84,70 @@ class Word < ActiveRecord::Base
       end
     end
     p "Done ..."
+  end
+
+  def self.export_image yes = false
+    if find_dups.present?
+      puts "=========================== Have duplicate word  = #{find_dups.size} =============================="
+    end
+    if not_vn_mean.present? && !yes
+      puts "=========================== Have word without VN MEAN = #{not_vn_mean.size} =============================="
+      not_vn_mean.each do |w|
+        puts "#{w.id} #{w.name} #{w.vn_name} #{w.romanji} #{w.mean} #{w.vn_mean}"
+      end
+      false
+    else
+      require 'RMagick'
+      self.all.each_with_index do |word, index|
+        word.fwrite(index + 1)
+      end
+      self.update_all(learned: true)
+    end
+  end
+
+  def fwrite i = 1
+    n = i.to_s.rjust(3, "0")
+    name = "img#{n}"
+
+    granite = Magick::ImageList.new("#{Rails.public_path.to_s}/1280x720.png")
+    canvas = Magick::ImageList.new
+    canvas.new_image(1280, 720, Magick::TextureFill.new(granite))
+
+    text = Magick::Draw.new
+    text.font = "#{Rails.public_path.to_s}/fonts-japanese-gothic.ttf"
+    text.gravity = Magick::CenterGravity
+
+    text.annotate(canvas, 0,0,0,-80, "#{self.name_jp}") { |txt|
+      txt.fill = '#0000ff'
+      txt.font_weight = Magick::BoldWeight
+      txt.pointsize = 140
+    }
+
+    text.annotate(canvas, 0,0,0,0, "#{self.romanji}") { |txt|
+      txt.fill = '#000000'
+      txt.font_weight = Magick::BoldWeight
+      txt.pointsize = 30
+    }
+
+    text.annotate(canvas, 0,0,0,50, "#{self.name}") { |txt|
+      txt.fill = '#E74C3C'
+      txt.pointsize = 60
+    }
+
+    text.annotate(canvas, 0,0,0,135, "#{self.vn_mean.present? ? self.vn_mean : self.mean} \n #{self.cn_mean.to_s.mb_chars.upcase.to_s}") { |txt|
+      txt.font = "#{Rails.public_path.to_s}/ARIALUNI.TTF"
+      txt.fill = '#555555'
+      txt.pointsize = 40
+    }
+
+    text.annotate(canvas, 0,0,-580,-330, "#{self.id} - #{self.lesson} - #{i}") { |txt|
+      txt.fill = '#000000'
+      txt.font_weight = Magick::BoldWeight
+      txt.pointsize = 20
+    }
+
+    canvas.write("/Users/THAO-NUS/Downloads/Todo/#{name}.png")
+    # canvas.write("#{name}.png")
   end
 
   def set_kanji_note
@@ -102,6 +178,47 @@ class Word < ActiveRecord::Base
       b_name[position - 1] = '　'
     end
     b_name
+  end
+
+  def fetch_vn_mean
+    url = URI.encode "http://mina.mazii.net/api/getSearchKotoba.php?query=#{self.romanji.strip}&start=0"
+    response = Net::HTTP.get(URI(url))
+    record = JSON.parse(response)["data"].detect{|n| n["roumaji"] == self.romanji.strip}
+    if record.present?
+      update(vn_mean: record["mean"], cn_mean: record["cn_mean"])
+    end
+  end
+
+  #Step 1: find_by_char(a)
+  #Step 2: find_by_char(a).find_dups -> Update vn_mean
+  #Step 3: find_by_char.not_vn_mean.update(&:fetch_vn_mean_d)
+
+  def fetch_vn_mean_d
+    url = URI.encode "http://mazii.net/api/search/#{self.name}/10/1"
+    response = Net::HTTP.get(URI(url))
+    data = JSON.parse(response)["data"]
+    record = data.detect{|n| n["word"] === self.name.strip}
+    puts "#{self.name} #{self.id}"
+    dash = "-"
+    vn_mean = ""
+    begin
+      vn_mean = "#{dash}#{record["means"][0]["mean"]}"
+    rescue
+    end
+    update(vn_mean: vn_mean)
+  end
+
+  def self.find_by_char(char)
+    all.order(romanji: :asc).where('romanji LIKE ?', "#{char}%")
+  end
+
+  def self.find_dups
+    words = []
+    all.select(:id, :name, :mean, :vn_mean).group_by(&:name).each_value {|value| words << value if  value.size > 1 }
+    words.each do |w|
+      puts w.inspect
+    end
+    words
   end
 
   def ping_slack

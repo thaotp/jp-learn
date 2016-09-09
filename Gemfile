@@ -54,6 +54,7 @@ gem 'devise'
 gem "rolify"
 gem "gon"
 gem 'mojinizer'
+gem 'rmagick'
 
 # for aws cloud storage
 gem 'fog'

@@ -11,18 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160902234434) do
+ActiveRecord::Schema.define(version: 20160908232116) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "alphabets", force: :cascade do |t|
-    t.string   "name"
-    t.string   "romanji"
-    t.integer  "status",     default: 0, null: false
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-  end
 
   create_table "delayed_jobs", force: :cascade do |t|
     t.integer  "priority",   default: 0, null: false
@@ -130,7 +122,7 @@ ActiveRecord::Schema.define(version: 20160902234434) do
     t.string   "romanji"
     t.string   "mean"
     t.string   "name_jp"
-    t.integer  "times",      default: 0
+    t.integer  "times"
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
     t.integer  "lesson"
@@ -140,6 +132,7 @@ ActiveRecord::Schema.define(version: 20160902234434) do
     t.boolean  "learned",    default: false
     t.boolean  "show",       default: false
     t.string   "vn_mean",    default: ""
+    t.string   "cn_mean"
   end
 
 end

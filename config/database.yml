@@ -22,13 +22,13 @@ default: &default
   adapter: postgresql
   encoding: unicode
   pool: 5
-  username: THAO-NUS
-  password: postgres
-  host: localhost
+  username: lieeqlwwhsvmeq
+  password: znAGrAIMODzZU2Hus2ZVqtgQvV
+  host: ec2-54-243-231-255.compute-1.amazonaws.com
 
 development:
   <<: *default
-  database: jl_development
+  database: dd727lk2t9tlg2
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
