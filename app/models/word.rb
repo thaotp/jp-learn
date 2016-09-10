@@ -87,22 +87,11 @@ class Word < ActiveRecord::Base
   end
 
   def self.export_image yes = false
-    if find_dups.present?
-      puts "=========================== Have duplicate word  = #{find_dups.size} =============================="
+    require 'RMagick'
+    self.all.each_with_index do |word, index|
+      word.fwrite(index + 1)
     end
-    if not_vn_mean.present? && !yes
-      puts "=========================== Have word without VN MEAN = #{not_vn_mean.size} =============================="
-      not_vn_mean.each do |w|
-        puts "#{w.id} #{w.name} #{w.vn_name} #{w.romanji} #{w.mean} #{w.vn_mean}"
-      end
-      false
-    else
-      require 'RMagick'
-      self.all.each_with_index do |word, index|
-        word.fwrite(index + 1)
-      end
-      self.update_all(learned: true)
-    end
+    self.update_all(learned: true)
   end
 
   def fwrite i = 1
@@ -117,17 +106,17 @@ class Word < ActiveRecord::Base
     text.font = "#{Rails.public_path.to_s}/fonts-japanese-gothic.ttf"
     text.gravity = Magick::CenterGravity
 
-    text.annotate(canvas, 0,0,0,-80, "#{self.name_jp}") { |txt|
+    text.annotate(canvas, 0,0,0,-60, "#{self.name_jp}") { |txt|
       txt.fill = '#0000ff'
       txt.font_weight = Magick::BoldWeight
-      txt.pointsize = 140
+      txt.pointsize = 160
     }
 
-    text.annotate(canvas, 0,0,0,0, "#{self.romanji}") { |txt|
-      txt.fill = '#000000'
-      txt.font_weight = Magick::BoldWeight
-      txt.pointsize = 30
-    }
+    # text.annotate(canvas, 0,0,0,0, "#{self.romanji}") { |txt|
+    #   txt.fill = '#000000'
+    #   txt.font_weight = Magick::BoldWeight
+    #   txt.pointsize = 30
+    # }
 
     text.annotate(canvas, 0,0,0,50, "#{self.name}") { |txt|
       txt.fill = '#E74C3C'
@@ -140,7 +129,7 @@ class Word < ActiveRecord::Base
       txt.pointsize = 40
     }
 
-    text.annotate(canvas, 0,0,-580,-330, "#{self.id} - #{self.lesson} - #{i}") { |txt|
+    text.annotate(canvas, 0,0,-530,-330, "#{self.id} - #{self.lesson} - #{i} - #{self.romanji}") { |txt|
       txt.fill = '#000000'
       txt.font_weight = Magick::BoldWeight
       txt.pointsize = 20
@@ -209,7 +198,15 @@ class Word < ActiveRecord::Base
   end
 
   def self.find_by_char(char)
-    all.order(romanji: :asc).where('romanji LIKE ?', "#{char}%")
+
+    words = all.order(romanji: :asc).where('romanji LIKE ?', "#{char}%")
+    puts "=========================== Have duplicate word  = #{words.find_dups.size} =============================="
+
+    puts "=========================== Have word without VN MEAN = #{words.not_vn_mean.size} =============================="
+    words.not_vn_mean.each do |w|
+      p "#{w.id} #{w.name} #{w.romanji} #{w.mean}"
+    end
+    words
   end
 
   def self.find_dups

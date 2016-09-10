@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160908232116) do
+ActiveRecord::Schema.define(version: 20160909103131) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,6 +50,22 @@ ActiveRecord::Schema.define(version: 20160908232116) do
     t.string   "lesson",     default: ""
     t.text     "urls",       default: [],              array: true
     t.integer  "number",     default: 0
+  end
+
+  create_table "kanji_examples", force: :cascade do |t|
+    t.string   "name",       default: ""
+    t.string   "name_jp",    default: ""
+    t.string   "mean",       default: ""
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  create_table "kanji_practises", force: :cascade do |t|
+    t.string   "name",       default: ""
+    t.string   "cn_name",    default: ""
+    t.text     "elements",   default: [],              array: true
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
   create_table "kanjis", force: :cascade do |t|
@@ -133,6 +149,7 @@ ActiveRecord::Schema.define(version: 20160908232116) do
     t.boolean  "show",       default: false
     t.string   "vn_mean",    default: ""
     t.string   "cn_mean"
+    t.boolean  "hard",       default: false
   end
 
 end
