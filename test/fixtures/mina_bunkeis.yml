@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  bunkei: MyString
+  lesson_id: 1
+  roumaji: 
+  vi_mean: MyString
+
+two:
+  bunkei: MyString
+  lesson_id: 1
+  roumaji: 
+  vi_mean: MyString

@@ -1,0 +1,23 @@
+- @words.each do |word|
+  .fast-kanji.n4-words
+    %dt.k-fast-dt
+      %span.kana
+        %ruby
+          %rb
+            %h2
+              = word.kanji || word.hiragana
+          %rp /
+          %rt
+            = !(word.kanji.hiragana? || word.kanji.katakana?) ? word.hiragana : '-'
+          %rp /
+        %ruby.ruby-two
+          %rb
+            %div.font-ui
+              - if word.vn_mean != ""
+                = word.vn_mean
+              - else
+                = word.en_mean
+          %rp /
+          %rt
+            = word.hanviet if word.kanji.present?
+          %rp /

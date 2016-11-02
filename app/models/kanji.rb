@@ -113,7 +113,6 @@ class Kanji < ActiveRecord::Base
 
 
 
-
   class ForceEmpty
     def last
       self

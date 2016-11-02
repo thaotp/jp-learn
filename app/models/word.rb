@@ -86,11 +86,20 @@ class Word < ActiveRecord::Base
     p "Done ..."
   end
 
-  def self.export_image yes = false
+  def self.export_image folder = nil
+    @@folder = folder
+    if folder.blank?
+      p "Please input name"
+      return
+    end
+    folder = "#{Rails.root.to_s}/Todo/#{@@folder}"
+    FileUtils::mkdir_p folder
+
     require 'RMagick'
     self.all.each_with_index do |word, index|
       word.fwrite(index + 1)
     end
+    p "Todo/./ffmpeg -framerate 1/3 -i Todo/#{@@folder}/img%03d.png -s:v 1280x720 -c:v libx264 -profile:v high -crf 20 -pix_fmt yuv420p Todo/#{@@folder}/#{@@folder}.mp4"
     self.update_all(learned: true)
   end
 
@@ -123,19 +132,20 @@ class Word < ActiveRecord::Base
       txt.pointsize = 60
     }
 
-    text.annotate(canvas, 0,0,0,135, "#{self.vn_mean.present? ? self.vn_mean : self.mean} \n #{self.cn_mean.to_s.mb_chars.upcase.to_s}") { |txt|
+    mean = breaking_word_wrap("#{self.vn_mean.present? ? self.vn_mean : self.mean}", 30)
+    text.annotate(canvas, 0,0,0,135, "#{mean}\n#{self.cn_mean.to_s.mb_chars.upcase.to_s}") { |txt|
       txt.font = "#{Rails.public_path.to_s}/ARIALUNI.TTF"
       txt.fill = '#555555'
       txt.pointsize = 40
     }
 
-    text.annotate(canvas, 0,0,-530,-330, "#{self.id} - #{self.lesson} - #{i} - #{self.romanji}") { |txt|
+    text.annotate(canvas, 0,0,-460,-330, "#{self.id} - #{self.lesson} - #{i} - #{self.romanji}") { |txt|
       txt.fill = '#000000'
       txt.font_weight = Magick::BoldWeight
-      txt.pointsize = 20
+      txt.pointsize = 35
     }
 
-    canvas.write("/Users/THAO-NUS/Downloads/Todo/#{name}.png")
+    canvas.write("Todo/#{@@folder}/#{name}.png")
     # canvas.write("#{name}.png")
   end
 
@@ -236,6 +246,95 @@ class Word < ActiveRecord::Base
         ts: Time.now.to_i
       }]
     )
+  end
+
+  def self.export_image_jisho folder = nil
+    @@folder = folder
+    if folder.blank?
+      p "Please input name"
+      return
+    end
+    folder = "#{Rails.root.to_s}/Todo/#{@@folder}"
+    FileUtils::mkdir_p folder
+
+    require 'RMagick'
+    self.all.each_with_index do |word, index|
+      word.fwrite_jisho(index + 1)
+    end
+    p "Todo/./ffmpeg -framerate 1/3 -i Todo/#{@@folder}/img%03d.png -s:v 1280x720 -c:v libx264 -profile:v high -crf 20 -pix_fmt yuv420p Todo/#{@@folder}/#{@@folder}.mp4"
+    self.update_all(learned: true)
+  end
+
+  def fwrite_jisho i = 1
+    n = i.to_s.rjust(3, "0")
+    name = "img#{n}"
+
+    granite = Magick::ImageList.new("#{Rails.public_path.to_s}/1280x720.png")
+    canvas = Magick::ImageList.new
+    canvas.new_image(1280, 720, Magick::TextureFill.new(granite))
+
+    text = Magick::Draw.new
+    text.font = "#{Rails.public_path.to_s}/fonts-japanese-gothic.ttf"
+    note = self.kanji_note.to_s.split(",").join(" ") || ""
+
+    text.annotate(canvas, 0,0,50,0, "#{self.lesson.to_s.remove("-")}") { |txt|
+      txt.fill = '#000000'
+      txt.gravity = Magick::NorthWestGravity
+      txt.font_weight = Magick::BoldWeight
+      txt.pointsize = 40
+    }
+
+    text.annotate(canvas, 0,0,0,80, "#{note.mb_chars.upcase.to_s}") { |txt|
+      txt.fill = '#000000'
+      txt.font = "#{Rails.public_path.to_s}/ARIALUNI.TTF"
+      txt.gravity = Magick::NorthGravity
+      txt.font_weight = Magick::BoldWeight
+      txt.pointsize = 30
+    }
+
+    text.gravity = Magick::CenterGravity
+
+    text.annotate(canvas, 0,0,0,-80, "#{self.name}") { |txt|
+      txt.fill = '#0000ff'
+      txt.font_weight = Magick::BoldWeight
+      txt.pointsize = 120
+    }
+
+
+    text.annotate(canvas, 0,0,0,0, "#{self.romanji}") { |txt|
+      txt.fill = '#000000'
+      txt.font_weight = Magick::BoldWeight
+      txt.pointsize = 30
+    }
+
+    text.annotate(canvas, 0,0,0,50, "#{self.name_jp}") { |txt|
+      txt.fill = '#E74C3C'
+      txt.pointsize = 60
+    }
+
+    mean = breaking_word_wrap("#{self.vn_mean.present? ? self.vn_mean : self.mean}", 30)
+    text.annotate(canvas, 0,0,0,175, "#{mean}\n#{self.cn_mean.to_s.mb_chars.upcase.to_s}") { |txt|
+      txt.font = "#{Rails.public_path.to_s}/ARIALUNI.TTF"
+      txt.fill = '#555555'
+      txt.pointsize = 40
+    }
+
+    # text.annotate(canvas, 0,0,-550,-330, "#{self.id} - #{i}") { |txt|
+    #   txt.fill = '#000000'
+    #   txt.font_weight = Magick::BoldWeight
+    #   txt.pointsize = 35
+    # }
+
+    canvas.write("Todo/#{@@folder}/#{name}.png")
+    # canvas.write("#{name}.png")
+  end
+
+  def self.remake_verbs
+    self.all.each do |word|
+      word.name_jp += word.name.chars.reject(&:kanji?).join(',').to_s
+      word.romanji = word.name_jp.romaji
+      word.save
+    end
   end
 
 end

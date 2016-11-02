@@ -13,6 +13,14 @@ class KanjisController < ApplicationController
     end
   end
 
+  def example
+    @kanjis = KanjiC.make_to_learn
+  end
+
+  def n4words
+    @words = JpltN4.order(romaji: :asc)
+  end
+
   private
 
   def permit_params

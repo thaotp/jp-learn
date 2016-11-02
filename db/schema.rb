@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160909103131) do
+ActiveRecord::Schema.define(version: 20161030095259) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,6 +31,14 @@ ActiveRecord::Schema.define(version: 20160909103131) do
   end
 
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
+
+  create_table "grammar_examples", force: :cascade do |t|
+    t.string   "name"
+    t.string   "mean"
+    t.integer  "grammar_list_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
 
   create_table "grammar_lists", force: :cascade do |t|
     t.text     "content1"
@@ -52,12 +60,83 @@ ActiveRecord::Schema.define(version: 20160909103131) do
     t.integer  "number",     default: 0
   end
 
+  create_table "jplt_n4_verbs", force: :cascade do |t|
+    t.string   "kanji",      default: ""
+    t.string   "hiragana",   default: ""
+    t.string   "en_mean",    default: ""
+    t.string   "vn_mean",    default: ""
+    t.string   "string",     default: ""
+    t.string   "hanviet",    default: ""
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.string   "romaji",     default: ""
+  end
+
+  create_table "jplt_n4s", force: :cascade do |t|
+    t.string   "kanji",      default: ""
+    t.string   "hiragana",   default: ""
+    t.string   "en_mean",    default: ""
+    t.string   "vn_mean",    default: ""
+    t.string   "string",     default: ""
+    t.string   "hanviet",    default: ""
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.string   "romaji",     default: ""
+  end
+
+  create_table "kanji512s", force: :cascade do |t|
+    t.string   "cn_mean"
+    t.string   "favorite"
+    t.string   "image"
+    t.string   "kunjomi"
+    t.integer  "lesson"
+    t.string   "note"
+    t.string   "numstroke"
+    t.string   "onjomi"
+    t.string   "remember"
+    t.string   "rkunjomi"
+    t.string   "ronjomi"
+    t.string   "tag"
+    t.string   "ucn_mean"
+    t.string   "uvi_mean"
+    t.string   "vi_mean"
+    t.string   "word"
+    t.string   "write"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.text     "full_notes", default: [], array: true
+  end
+
+  create_table "kanji_bs", force: :cascade do |t|
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.string   "kanji",      default: ""
+    t.string   "sample",     default: ""
+    t.string   "hiragana",   default: ""
+    t.string   "hanviet",    default: ""
+    t.string   "mean",       default: ""
+    t.string   "type_w",     default: ""
+    t.string   "romaji",     default: ""
+  end
+
+  create_table "kanji_cs", force: :cascade do |t|
+    t.string   "kanji",      default: ""
+    t.string   "hanviet",    default: ""
+    t.string   "vn_mean",    default: ""
+    t.string   "en_mean",    default: ""
+    t.string   "jp_mean",    default: ""
+    t.integer  "level"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
   create_table "kanji_examples", force: :cascade do |t|
     t.string   "name",       default: ""
     t.string   "name_jp",    default: ""
     t.string   "mean",       default: ""
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
+    t.string   "romanji"
   end
 
   create_table "kanji_practises", force: :cascade do |t|
@@ -86,6 +165,61 @@ ActiveRecord::Schema.define(version: 20160909103131) do
     t.text     "example_tb"
     t.string   "level"
     t.string   "r_type",     default: ""
+  end
+
+  create_table "mina_bunkeis", force: :cascade do |t|
+    t.string   "bunkei"
+    t.integer  "lesson_id"
+    t.string   "roumaji"
+    t.string   "vi_mean"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "mina_grammars", force: :cascade do |t|
+    t.string   "content"
+    t.integer  "lesson_id"
+    t.string   "name"
+    t.string   "tag"
+    t.string   "uname"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "mina_kaiwas", force: :cascade do |t|
+    t.string   "c_roumaji"
+    t.string   "character"
+    t.string   "j_roumaji"
+    t.string   "kaiwa"
+    t.string   "lesson_id"
+    t.string   "vi_mean"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "mina_kotobas", force: :cascade do |t|
+    t.string   "cn_mean"
+    t.string   "favorite"
+    t.string   "hiragana"
+    t.string   "kanji"
+    t.string   "kanji_id"
+    t.string   "lesson_id"
+    t.string   "mean"
+    t.string   "mean_unsigned"
+    t.string   "roumaji"
+    t.string   "tag"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  create_table "mina_reibuns", force: :cascade do |t|
+    t.integer  "lesson_id"
+    t.string   "reibun"
+    t.string   "roumaji"
+    t.string   "vi_mean"
+    t.integer  "type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "radicals", force: :cascade do |t|
@@ -133,12 +267,31 @@ ActiveRecord::Schema.define(version: 20160909103131) do
     t.datetime "updated_at",                  null: false
   end
 
+  create_table "word_todays", force: :cascade do |t|
+    t.string   "name"
+    t.string   "romanji"
+    t.string   "mean"
+    t.string   "name_jp"
+    t.integer  "lesson"
+    t.string   "kanji"
+    t.string   "kanji_note"
+    t.string   "hint"
+    t.boolean  "learned"
+    t.boolean  "show"
+    t.string   "vn_mean"
+    t.string   "cn_mean"
+    t.boolean  "hard"
+    t.string   "today"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "words", force: :cascade do |t|
     t.string   "name"
     t.string   "romanji"
     t.string   "mean"
     t.string   "name_jp"
-    t.integer  "times"
+    t.integer  "times",      default: 0
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
     t.integer  "lesson"
@@ -150,6 +303,7 @@ ActiveRecord::Schema.define(version: 20160909103131) do
     t.string   "vn_mean",    default: ""
     t.string   "cn_mean"
     t.boolean  "hard",       default: false
+    t.string   "today"
   end
 
 end

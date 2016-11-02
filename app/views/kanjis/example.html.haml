@@ -1,0 +1,22 @@
+- @kanjis.each do |kanji|
+  .fast-kanji
+    %dt.k-fast-dt
+      %span.kana
+        %ruby
+          %rb
+            %h2{class: "#{'underline' if kanji.sample.contains_hiragana? }"}
+              = kanji.sample
+          %rp /
+          %rt
+            = kanji.hiragana.split(',')[0]
+          %rp /
+    %dd.k-fast-dd
+      %div
+        %span.kana
+          %ruby
+            %rb
+              = kanji.hanviet.split(',').select{|h| h.length > 1}.join(',')
+            %rp /
+            %rt
+              = kanji.mean.split(',')[-1]
+            %rp /

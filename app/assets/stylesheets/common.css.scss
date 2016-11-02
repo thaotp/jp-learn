@@ -36,3 +36,58 @@
 .easer-btn{
   margin-left: 80px;
 }
+.fast-kanji{;
+  display: inline-block;
+  .k-fast-dt{
+    font-size: 13px;
+    line-height: 22px;
+    font-weight: 400;
+    display: inline-block;
+    h2{
+      font-size: 15px;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+    color: black;
+  }
+  .k-fast-dd{
+    rb{
+      font-size: 10px;
+    }
+    display: inline-block;
+    color: black;
+    rt{
+      font-size: 9px;
+    }
+  }
+  .kana{
+    border-right: 1px dashed #888888;
+    padding-right: 1px;
+    display: inline-block;
+  }
+}
+.table-kanji{
+  td{
+    min-width: 120px;
+  }
+}
+.underline{
+  border-bottom: 1px dashed #000;
+}
+.n4-words{
+  rt{
+    font-size: 10px;
+  }
+
+}
+.font-ui{
+  max-width: 75px;
+  white-space: nowrap;
+  overflow: hidden !important;
+  text-overflow: ellipsis;
+  font-style: italic;
+}
+.ruby-two{
+  vertical-align: -webkit-baseline-middle;
+}

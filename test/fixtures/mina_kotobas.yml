@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  cn_mean: MyString
+  favorite: MyString
+  hiragana: MyString
+  kanji: MyString
+  kanji_id: MyString
+  lesson_id: MyString
+  mean: MyString
+  mean_unsigned: MyString
+  roumaji: MyString
+  tag: MyString
+
+two:
+  cn_mean: MyString
+  favorite: MyString
+  hiragana: MyString
+  kanji: MyString
+  kanji_id: MyString
+  lesson_id: MyString
+  mean: MyString
+  mean_unsigned: MyString
+  roumaji: MyString
+  tag: MyString

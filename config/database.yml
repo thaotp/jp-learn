@@ -26,6 +26,15 @@ default: &default
   password: znAGrAIMODzZU2Hus2ZVqtgQvV
   host: ec2-54-243-231-255.compute-1.amazonaws.com
 
+kanji_b_japanse: &kanji
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  username: THAO-NUS
+  password: postgres
+  host: localhost
+  database: kanji_b_japanse
+
 development:
   <<: *default
   database: dd727lk2t9tlg2

@@ -1,4 +1,5 @@
 class KanjiExample < ActiveRecord::Base
+  before_create :set_romanji
   def self.bulk_import(data)
     words = []
     data.split("\n").each do |word_group|
@@ -9,6 +10,10 @@ class KanjiExample < ActiveRecord::Base
       words << {name: name, name_jp: name_jp, mean: mean}
     end
     create! words
+  end
+
+  def set_romanji
+    self.romanji = self.name_jp.romaji
   end
 
   def self.detect_ids word

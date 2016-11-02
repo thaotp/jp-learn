@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  c_roumaji: MyString
+  character: MyString
+  j_roumanji: MyString
+  kaiwa: MyString
+  lesson_id: MyString
+  vi_mean: MyString
+
+two:
+  c_roumaji: MyString
+  character: MyString
+  j_roumanji: MyString
+  kaiwa: MyString
+  lesson_id: MyString
+  vi_mean: MyString

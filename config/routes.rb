@@ -61,6 +61,8 @@ Rails.application.routes.draw do
   get '/radical' => 'home#public'
   get '/kanji/edit' => 'home#public'
   get '/kanji/write' => 'home#public'
+  get '/kanji/example' => 'kanjis#example'
+  get '/kanji/n4words' => 'kanjis#n4words'
 
   resources :words, only: [:show]
   resources :settings do
@@ -79,6 +81,7 @@ Rails.application.routes.draw do
     end
 
     resources :kanjis, :defaults => { :format => 'json' } do
+
     end
 
     resources :sentences, :defaults => { :format => 'json' } do
@@ -89,8 +92,10 @@ Rails.application.routes.draw do
     end
     resources :randoms, :defaults => { :format => 'json' } do
       get 'quiz', on: :collection
+      get 'minakotoba', on: :collection
       get 'boost', on: :collection
       get 'read', on: :collection
+      post 'slack', on: :collection
     end
 
     resources :grammars, only: [:show]
