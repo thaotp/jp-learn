@@ -1,4 +1,5 @@
 class MinaGrammar < ActiveRecord::Base
+  ActiveRecord::Base.establish_connection :kanji_b_japanse if Rails.env == "development"
   def self.fetch
     (1..50).each do |i|
         url = "http://mina.mazii.net/api/getGrammar.php?lessonid=#{i}"
@@ -34,6 +35,10 @@ class MinaGrammar < ActiveRecord::Base
       end
     end
   end
-
+  def self.random
+    record = where(lesson_id: [26..50]).order(updated_at: :asc).limit(0).first
+    record.touch
+    record
+  end
 
 end

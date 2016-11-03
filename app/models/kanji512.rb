@@ -1,5 +1,5 @@
 class Kanji512 < ActiveRecord::Base
-  ActiveRecord::Base.establish_connection :development
+  ActiveRecord::Base.establish_connection :development if Rails.env == "development"
   def self.fetch
     (1..32).each do |i|
       url = "http://mina.mazii.net/api/getIKanji.php?lessonid=#{i}"

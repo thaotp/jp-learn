@@ -14,8 +14,10 @@ class RandomsController < ApplicationController
   end
 
   def minakotoba
-    words = MinaKotoba.top_three.fetch_quiz
-    render json: {words: words.as_json_as}
+    models = [MinaKotoba, MinaReibun]
+    grammar_name = MinaGrammar.random.as_json(:only => [:id, :name, :lesson_id])
+    words = models.sample.top_three.fetch_quiz
+    render json: {words: words.as_json_as, sentence: grammar_name}
   end
 
   def read

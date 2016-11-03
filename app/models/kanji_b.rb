@@ -1,5 +1,5 @@
 class KanjiB < ActiveRecord::Base
-  ActiveRecord::Base.establish_connection :kanji_b_japanse
+  ActiveRecord::Base.establish_connection :kanji_b_japanse if Rails.env == "development"
   self.table_name = 'kanji_bs'
   def self.raw_hiragana
     KanjiC.where(level: [4, 5]).pluck(:kanji).each do |kn|

@@ -1,5 +1,5 @@
 class MinaKotoba < ActiveRecord::Base
-  ActiveRecord::Base.establish_connection :kanji_b_japanse
+  ActiveRecord::Base.establish_connection :kanji_b_japanse if Rails.env == "development"
   scope :top_three, -> { where(lesson_id: [26,27,28,29,30,31,32]) }
   scope :fetch_quiz, -> { order(updated_at: :asc).limit(4) }
   def self.fetch
@@ -46,4 +46,5 @@ class MinaKotoba < ActiveRecord::Base
     q = self.kanji.present? ? "#{self.cn_mean}(#{self.roumaji}): #{self.mean}" : "#{self.roumaji}: #{self.mean}"
     (options << [self.id, q]).shuffle
   end
+
 end

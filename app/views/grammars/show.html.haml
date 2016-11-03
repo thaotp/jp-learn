@@ -1,0 +1,12 @@
+.container
+  .row
+    .col-sm-12
+      .name-grammar
+        %span
+          = @grammar.lesson_id
+        %span
+          = @grammar.name
+      .content-grammar
+        - @grammar.content.split(/\$.*?\$/).each do |g|
+          %br
+          = g

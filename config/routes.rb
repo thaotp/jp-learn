@@ -68,6 +68,7 @@ Rails.application.routes.draw do
   resources :settings do
     get 'reader', on: :collection
   end
+  resources :grammars, only: [:show]
 
   scope "/api/v1" do
     resources :words, :defaults => { :format => 'json' } do

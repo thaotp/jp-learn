@@ -1,5 +1,5 @@
 class KanjiC < ActiveRecord::Base
-  ActiveRecord::Base.establish_connection :kanji_b_japanse
+  ActiveRecord::Base.establish_connection :kanji_b_japanse if Rails.env == "development"
   self.table_name = 'kanji_cs'
   require 'csv'
   def self.import_csv(url)

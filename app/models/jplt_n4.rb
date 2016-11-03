@@ -1,6 +1,6 @@
 require 'csv'
 class JpltN4 < ActiveRecord::Base
-  ActiveRecord::Base.establish_connection :kanji_b_japanse
+  ActiveRecord::Base.establish_connection :kanji_b_japanse if Rails.env == "development"
   def self.import_csv(url)
     data = []
     csv_text = File.read(url)
