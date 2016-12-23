@@ -1,0 +1,95 @@
+/ - @files.each_with_index do |audio, index|
+/   %div
+/     %span
+/       = audio
+/     %span
+/       |
+/     %audio{id: "track-#{index}", :ontimeupdate => "document.getElementById('tracktime-#{index}').innerHTML = Math.floor(this.currentTime) + ' / ' + Math.floor(this.duration); document.getElementById('js-duration').value = Math.floor(this.currentTime)", :src => "/#{audio}"}
+/       %p Your browser does not support the audio element
+/     %span
+/       |
+/     %span{id: "tracktime-#{index}"} 0 / 0
+
+/     %button{:onclick => "document.getElementById('track-#{index}').play();$('button').blur();$('input').blur();$('.duration-group input').remove()"} Play
+/   %input#js-duration.hidden
+/   = form_tag('/settings/s_audio', :method=>'post', :remote => true) do
+/     = hidden_field_tag 'name', audio
+/     .duration-group
+/     = submit_tag 'Submit'
+
+.sm2-bar-ui.full-width.fixed.playlist-open
+  .bd.sm2-main-controls
+    .sm2-inline-texture
+    .sm2-inline-gradient
+    .sm2-inline-element.sm2-button-element
+      .sm2-button-bd
+        %a.sm2-inline-button.play-pause{:href => "#play"} Play / pause
+    .sm2-inline-element.sm2-inline-status
+      .sm2-playlist
+        .sm2-playlist-target
+          / playlist <ul> + <li> markup will be injected here
+          / if you want default / non-JS content, you can put that here.
+          %noscript
+            %p JavaScript is required.
+      .sm2-progress
+        .sm2-row
+          .sm2-inline-time 0:00
+          .sm2-progress-bd
+            .sm2-progress-track
+              .sm2-progress-bar
+              .sm2-progress-ball
+                .icon-overlay
+          .sm2-inline-duration 0:00
+    .sm2-inline-element.sm2-button-element.sm2-volume
+      .sm2-button-bd
+        %span.sm2-inline-button.sm2-volume-control.volume-shade
+        %a.sm2-inline-button.sm2-volume-control{:href => "#volume"} volume
+    .sm2-inline-element.sm2-button-element
+      .sm2-button-bd
+        %a.sm2-inline-button.previous{:href => "#prev", :title => "Previous"} &lt; previous
+    .sm2-inline-element.sm2-button-element
+      .sm2-button-bd
+        %a.sm2-inline-button.next{:href => "#next", :title => "Next"} &gt; next
+    .sm2-inline-element.sm2-button-element
+      .sm2-button-bd
+        %a.sm2-inline-button.repeat{:href => "#repeat", :title => "Repeat playlist"} ∞ repeat
+    / not implemented
+    /
+      <div class="sm2-inline-element sm2-button-element disabled">
+      <div class="sm2-button-bd">
+      <a href="#shuffle" title="Shuffle" class="sm2-inline-button shuffle">shuffle</a>
+      </div>
+      </div>
+    .sm2-inline-element.sm2-button-element.sm2-menu
+      .sm2-button-bd
+        %a.sm2-inline-button.menu{:href => "#menu"} menu
+  .bd.sm2-playlist-drawer.sm2-element
+    .sm2-inline-texture
+      .sm2-box-shadow
+    / playlist content is mirrored here
+    .sm2-playlist-wrapper
+      %ul.sm2-playlist-bd
+        / item with "download" link
+        - @files.each_with_index do |audio, index|
+          %li
+            .sm2-row
+              .sm2-col.sm2-wide
+                %a{:href => audio[:url]}
+                  %b
+                    = audio[:name]
+                  %span.label
+
+
+
+:javascript
+  $(document).ready( function() {
+    document.body.onkeyup = function(e){
+      if(e.keyCode == 32){
+        var input = "<input type='text' name='duration[]' class='get-duration' value="+ $('#js-duration').val() +">"
+        $('.duration-group').append(input)
+        $('button').blur();
+        $('input').blur();
+      }
+    }
+  } );
+

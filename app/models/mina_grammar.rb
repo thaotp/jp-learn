@@ -41,4 +41,32 @@ class MinaGrammar < ActiveRecord::Base
     record
   end
 
+  LESSONS = (26..50).to_a
+  scope :top_three, -> { where(lesson_id: LESSONS) }
+  scope :fetch_quiz, -> { order(updated_at: :asc).limit(4) }
+
+  def self.as_json_as(options={})
+    transaction do
+      all.map do |word|
+        word.touch
+        word.as_json(:methods => [:quiz_options, :question, :answer])
+      end
+    end
+  end
+
+  def question
+    "#{self.lesson_id} - #{self.name}"
+  end
+
+  def answer
+
+  end
+
+  def quiz_options
+    options = MinaGrammar.where.not(id: self.id).sample(3).map do |word|
+      [word.id, word.name]
+    end
+    (options << [self.id, self.name]).shuffle
+  end
+
 end

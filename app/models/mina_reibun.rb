@@ -1,5 +1,7 @@
 class MinaReibun < ActiveRecord::Base
   ActiveRecord::Base.establish_connection :kanji_b_japanse if Rails.env == "development"
+
+  LESSONS = [42]
   def self.fetch
     (1..50).each do |i|
       url = "http://mina.mazii.net/api/getReibun.php?lessonid=#{i}"
@@ -31,7 +33,7 @@ class MinaReibun < ActiveRecord::Base
     end
   end
 
-  scope :top_three, -> { where(lesson_id: [26,27,28,29,30,31,32]) }
+  scope :top_three, -> { where(lesson_id: LESSONS) }
   scope :fetch_quiz, -> { order(updated_at: :asc).limit(4) }
 
   def self.as_json_as(options={})

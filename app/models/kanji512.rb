@@ -1,5 +1,5 @@
 class Kanji512 < ActiveRecord::Base
-  ActiveRecord::Base.establish_connection :development if Rails.env == "development"
+  ActiveRecord::Base.establish_connection :kanji_b_japanse if Rails.env == "development"
   def self.fetch
     (1..32).each do |i|
       url = "http://mina.mazii.net/api/getIKanji.php?lessonid=#{i}"
@@ -17,10 +17,32 @@ class Kanji512 < ActiveRecord::Base
   end
 
   def set_hanviet
-    news = notes.map do |n|
+    self.full_notes = notes.map do |n|
       n << n.first.chars.select(&:kanji?).map do |k|
         KanjiC.where(kanji: k).pluck(:hanviet)
-      end.join(' ')
+      end.join(' ').mb_chars.upcase.to_s
+    end
+    save!
+  end
+
+  def self.kanji_genkis
+    all.each do |word|
+      word.full_notes.each do |n|
+        KanjiGenki.create({
+          name: n[0],
+          hiragana: n[1],
+          mean: n[2],
+          remember: word.remember,
+          rkunjomi: word.rkunjomi,
+          ronjomi: word.ronjomi,
+          kunjomi: word.kunjomi,
+          onjomi: word.onjomi,
+          hanviet: n[3],
+          origin: word.word,
+          kanji512_id: word.id,
+          lesson_id: word.lesson
+        })
+      end
     end
   end
 

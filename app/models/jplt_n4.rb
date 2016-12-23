@@ -43,4 +43,27 @@ class JpltN4 < ActiveRecord::Base
       end
     end
   end
+
+  scope :top_three, -> { limit(100).offset(0) }
+  scope :fetch_quiz, -> { order(updated_at: :asc).limit(4) }
+  def self.as_json_as(options={})
+    transaction do
+      all.map do |word|
+        word.touch
+        word.as_json(:methods => [:quiz_options, :question])
+      end
+    end
+  end
+
+  def question
+    own = "#{self.hanviet.to_s.mb_chars.upcase.to_s} - #{self.kanji}(#{self.hiragana}): #{self.vn_mean.present? ? self.vn_mean : self.en_mean}"
+  end
+
+  def quiz_options
+    options = JpltN4.where.not(id: self.id).sample(3).map do |word|
+      [word.id, "#{word.hiragana} - #{word.vn_mean.present? ? word.vn_mean : word.en_mean}"]
+    end
+    q = "#{self.hiragana} - #{self.vn_mean.present? ? self.vn_mean : self.en_mean}"
+    (options << [self.id, q]).shuffle
+  end
 end

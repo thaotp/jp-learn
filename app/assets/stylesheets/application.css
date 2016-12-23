@@ -23,5 +23,6 @@
  *= require login
  *= require page
  *= require common
+ *= require bar-ui
  *= require_self
  */

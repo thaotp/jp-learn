@@ -63,10 +63,13 @@ Rails.application.routes.draw do
   get '/kanji/write' => 'home#public'
   get '/kanji/example' => 'kanjis#example'
   get '/kanji/n4words' => 'kanjis#n4words'
+  get '/type' => 'words#type'
 
   resources :words, only: [:show]
   resources :settings do
     get 'reader', on: :collection
+    get 'audio', on: :collection
+    post 's_audio', on: :collection
   end
   resources :grammars, only: [:show]
 

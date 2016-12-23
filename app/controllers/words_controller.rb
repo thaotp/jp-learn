@@ -56,7 +56,9 @@ class WordsController < ApplicationController
 
   def search
     key = params[:word]
-    words = Word.where('romanji LIKE ? OR mean LIKE ? OR name_jp LIKE ?', "%#{key}%", "%#{key}%", "%#{key}%")
+    id = key.to_i
+    id = -1 if id == 0
+    words = MinaKotoba.where('id = ? OR hiragana LIKE ? OR kanji LIKE ? OR mean LIKE ? OR roumaji LIKE ?', "#{id}", "%#{key}%", "%#{key}%", "%#{key}%", "%#{key}%")
     render json: words
   end
 
@@ -72,6 +74,11 @@ class WordsController < ApplicationController
       word_u.update(times: word[:times]) if word.present?
     end
     render json: Word.all, status: 200
+
+  end
+
+
+  def type
 
   end
 

@@ -14,9 +14,10 @@ class RandomsController < ApplicationController
   end
 
   def minakotoba
-    models = [MinaKotoba, MinaReibun]
+    models = [MinaKotoba, MinaReibun, KanjiGenki, MinaGrammar, MinaBunkei, JpltN4]
+    now = models[0]
     grammar_name = MinaGrammar.random.as_json(:only => [:id, :name, :lesson_id])
-    words = models.sample.top_three.fetch_quiz
+    words = now.top_three.fetch_quiz
     render json: {words: words.as_json_as, sentence: grammar_name}
   end
 
@@ -46,9 +47,9 @@ class RandomsController < ApplicationController
     elsif params[:type] == 'shadow'
       Shadow.order(id: :asc)
     else
-      Word.where(lesson: params[:lesson]).order(id: :asc)
+      MinaKotoba.where(lesson_id: params[:lesson]).order(id: :asc)
     end
-
+    p records
     render json: records
   end
 

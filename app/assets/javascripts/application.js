@@ -58,3 +58,12 @@
 // Qvoval App, should be last!
 //= require public/app
 $.fn.editable.defaults.mode = 'inline';
+$( document ).ready(function() {
+  $('.js-ip-type').keypress(function (e) {
+    var key = e.which;
+    if(key == 13){
+      $('.js-append-type').after("<p>"+ $('.js-ip-type').val() +"</p>")
+      $('.js-ip-type').val('')
+    }
+  });
+});

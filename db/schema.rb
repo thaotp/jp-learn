@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161030095259) do
+ActiveRecord::Schema.define(version: 20161119164854) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -79,9 +79,10 @@ ActiveRecord::Schema.define(version: 20161030095259) do
     t.string   "vn_mean",    default: ""
     t.string   "string",     default: ""
     t.string   "hanviet",    default: ""
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.string   "romaji",     default: ""
+    t.boolean  "stick",      default: false
   end
 
   create_table "kanji512s", force: :cascade do |t|
@@ -137,6 +138,23 @@ ActiveRecord::Schema.define(version: 20161030095259) do
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
     t.string   "romanji"
+  end
+
+  create_table "kanji_genkis", force: :cascade do |t|
+    t.string   "name"
+    t.string   "hiragana"
+    t.string   "mean"
+    t.string   "remember"
+    t.string   "rkunjomi"
+    t.string   "ronjomi"
+    t.string   "kunjomi"
+    t.string   "onjomi"
+    t.string   "hanviet"
+    t.string   "origin"
+    t.integer  "kanji512_id"
+    t.string   "lesson_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "kanji_practises", force: :cascade do |t|
@@ -208,8 +226,10 @@ ActiveRecord::Schema.define(version: 20161030095259) do
     t.string   "mean_unsigned"
     t.string   "roumaji"
     t.string   "tag"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.boolean  "stick",         default: false
+    t.string   "audio_link"
   end
 
   create_table "mina_reibuns", force: :cascade do |t|
