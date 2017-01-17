@@ -45,7 +45,8 @@ kanji_b_japanse: &kanji
 
 development:
   <<: *default
-  database: dd727lk2t9tlg2
+  database: kanji_b_japanse
+  # database: dd727lk2t9tlg2
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".

@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  link: MyString
+  name: MyString
+  durations: MyText
+  vol_abulm_id: 1
+
+two:
+  link: MyString
+  name: MyString
+  durations: MyText
+  vol_abulm_id: 1

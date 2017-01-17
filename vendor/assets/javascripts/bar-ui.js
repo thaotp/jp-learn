@@ -193,6 +193,7 @@
             dom.progressBar.style.width = width;
 
             // TODO: only write changes
+            window.current_position = Math.floor(this.position/1000)
             dom.time.innerHTML = getTime(this.position, true);
 
           }
@@ -303,14 +304,17 @@
           lastIndex = playlistController.data.selectedIndex;
 
           callback('finish');
-
           // next track?
           if (playlistController.data.loopMode){
             item = playlistController.getItem(lastIndex);
             condition = (true && item)
           }else{
-            item = playlistController.getNext();
-            condition = (item && playlistController.data.selectedIndex !== lastIndex)
+            if($('.jsFinishEnd:checked').val() == 'true'){
+              condition = false
+            }else{
+              item = playlistController.getNext();
+              condition = (item && playlistController.data.selectedIndex !== lastIndex)
+            }
           }
 
           // don't play the same item over and over again, if at end of playlist etc.
@@ -346,7 +350,7 @@
 
     }
 
-    function playLink(link) {
+    function playLink(link, positions) {
 
       // if a link is OK, play it.
 
@@ -377,10 +381,18 @@
 
         stopOtherSounds();
 
-        soundObject.play({
-          url: link.href,
-          position: 0
-        });
+        if(_.isUndefined(positions)){
+          soundObject.play({
+            url: link.href,
+            position: 0
+          });
+        }else{
+          soundObject.play({
+            url: link.href,
+            from: positions.from,
+            to: positions.to
+          });
+        }
 
       }
 
@@ -567,7 +579,7 @@
             dom.playlist.scrollTop = itemBottom - containerHeight + itemPadding;
           } else if (itemTop < scrollTop) {
             // top-align
-            dom.playlist.scrollTop = item.offsetTop - itemPadding;
+            // dom.playlist.scrollTop = item.offsetTop - itemPadding;
           }
 
         }
@@ -579,7 +591,7 @@
 
       }
 
-      function playItemByOffset(offset) {
+      function playItemByOffset(offset, positions) {
 
         var item;
 
@@ -588,7 +600,7 @@
         item = getItem(offset);
 
         if (item) {
-          playLink(item.getElementsByTagName('a')[0]);
+          playLink(item.getElementsByTagName('a')[0], positions);
         }
 
       }
@@ -880,6 +892,7 @@
       }
 
       dom.o = playerNode;
+      console.log(dom.o)
 
       // are we dealing with a crap browser? apply legacy CSS if so.
       if (window.navigator.userAgent.match(/msie [678]/i)) {
@@ -954,7 +967,7 @@
 
     actions = {
 
-      play: function(offsetOrEvent) {
+      play: function(offsetOrEvent, positions) {
 
         /**
          * This is an overloaded function that takes mouse/touch events or offset-based item indices.
@@ -968,7 +981,7 @@
 
         if (offsetOrEvent !== undefined && !isNaN(offsetOrEvent)) {
           // smells like a number.
-          return playlistController.playItemByOffset(offsetOrEvent);
+          return playlistController.playItemByOffset(offsetOrEvent, positions);
         }
 
         // DRY things a bit

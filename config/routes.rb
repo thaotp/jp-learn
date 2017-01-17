@@ -68,8 +68,15 @@ Rails.application.routes.draw do
   resources :words, only: [:show]
   resources :settings do
     get 'reader', on: :collection
-    get 'audio', on: :collection
+    # get 'audio', on: :collection
+    # post 's_audio', on: :collection
+    # post 'p_audio', on: :collection
+  end
+
+  resources :audios do
     post 's_audio', on: :collection
+    post 'p_audio', on: :collection
+    get 'results', on: :collection
   end
   resources :grammars, only: [:show]
 
@@ -100,6 +107,8 @@ Rails.application.routes.draw do
       get 'boost', on: :collection
       get 'read', on: :collection
       post 'slack', on: :collection
+      get 'jocker', on: :collection
+      get 'kotoba_jocker', on: :collection
     end
 
     resources :grammars, only: [:show]

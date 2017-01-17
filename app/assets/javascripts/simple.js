@@ -23,5 +23,6 @@
 //= require drawingboard.min
 //= require soundmanager2-jsmin
 //= require bar-ui.js
+//= require main.js
 
 

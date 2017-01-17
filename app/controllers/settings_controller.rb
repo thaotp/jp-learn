@@ -21,10 +21,20 @@ class SettingsController < ApplicationController
   end
 
   def audio
-    audio = Rails.public_path.join('audio').to_s
-    @files = Dir["#{audio}/MiniVocabulary/*.mp3"].map do |file|
-      name = File.split(file)[1]
-      { url: URI.encode("/audio/MiniVocabulary/#{name}"), name: name}
+    if params[:album].blank?
+      fols = Dir["public/audio/*"].select{|fol| File.directory?(fol) }.map{ |fol| File.split(fol)[1] }
+      fols.each do |fol|
+        VolAulm.create(name: fol) unless VolAulm.exists?(name: fol)
+      end
+      @vols = VolAulm.all
+      render 'album_blank'
+    else
+      @vol = VolAulm.find(params[:album])
+      audio = Rails.public_path.join('audio').to_s
+      @files = Dir["#{audio}/#{@vol.name}/*.mp3"].map do |file|
+        name = File.split(file)[1]
+        { url: URI.encode("/audio/#{@vol.name}/#{name}"), name: name}
+      end
     end
   end
 
@@ -38,6 +48,15 @@ class SettingsController < ApplicationController
       "ffmpeg -i #{path} -acodec copy -ss #{start_time} -t #{range} #{++index}.mp3"
     end
     p arr
+    render json: {}
+  end
+
+  def p_audio
+    durations = params[:durations]
+    durations.map!(&:to_i) if durations.present?
+    audio = Duration.new(link: params[:link], durations: params[:durations], index_link: params[:index_link], option: params[:option], vol_aulm_id: params[:vol_aulm_id])
+    audio.save
+    # audio.execute if audio.save!
     render json: {}
   end
 end

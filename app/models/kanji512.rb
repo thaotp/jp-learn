@@ -74,4 +74,15 @@ class Kanji512 < ActiveRecord::Base
       end
     end
   end
+
+  require 'csv'
+  def self.to_csv_hanviet(options = {})
+    file = CSV.open("#{Dir.pwd}/csv/kanji-512#{Time.now}.csv", "w") do |csv|
+      all.each do |word|
+        word.remember = Rails::Html::FullSanitizer.new.sanitize(word.remember)
+        word.cn_mean = word.cn_mean.mb_chars.upcase.to_s
+        csv << word.attributes.values_at(*[:word, :cn_mean, :vi_mean, :remember, :lesson].map(&:to_s))
+      end
+    end
+  end
 end

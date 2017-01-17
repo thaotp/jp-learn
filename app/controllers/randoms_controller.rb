@@ -21,6 +21,18 @@ class RandomsController < ApplicationController
     render json: {words: words.as_json_as, sentence: grammar_name}
   end
 
+  def jocker
+    words = Kanji512.where(lesson: (20..22).to_a)
+    loops = Kanji512.select(:cn_mean, :word, :id, :onjomi, :kunjomi, :vi_mean).where(lesson: 23)
+    sentences = MinaReibun.select(:id, :reibun, :roumaji, :vi_mean).where(lesson_id: 35).order(:id)
+    render json: { words: words, loops:  loops, sentences: sentences}
+  end
+
+  def kotoba_jocker
+    words = MinaKotoba.where(lesson_id: [35])
+    render json: { words: words }
+  end
+
   def read
     reader = Reader.newest
     reader.touch

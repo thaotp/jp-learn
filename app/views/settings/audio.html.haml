@@ -16,6 +16,56 @@
 /     = hidden_field_tag 'name', audio
 /     .duration-group
 /     = submit_tag 'Submit'
+.container
+  .page
+    .page-content
+      .duration-group
+      .row
+        .col-sm-6
+          .form-group
+            %label.control-label{:for => ""} Total
+            %input.form-control{:autocomplete => "off", :id => "jsTotalAudio", :name => "", :type => "text"}/
+        .col-sm-6
+          .form-group.col-sm-4
+            %label.control-label Option
+            %div
+              .radio-custom.radio-default.radio-inline
+                %input#jsOptionI.jsOption{:checked => "checked", :name => "option", value: 0, :type => "radio"}/
+                %label{:for => "jsOptionI"} Option I
+              .radio-custom.radio-default.radio-inline
+                %input#jsOptionII.jsOption{:name => "option",value: 1, :type => "radio"}/
+                %label{:for => "jsOptionII"} Option II
+            %div
+              .radio-custom.radio-default.radio-inline
+                %input#jsFinshOn.jsFinishEnd{:checked => "checked", :name => "end", :type => "radio", value: 'true'}/
+                %label{:for => "jsFinshOn"} On
+              .radio-custom.radio-default.radio-inline
+                %input#jsFinshOff.jsFinishEnd{:name => "end", :type => "radio", value: 'false'}/
+                %label{:for => "jsFinshOff"} Off
+          .form-group.col-sm-8
+            %label.control-label{:for => ""} &nbsp
+            %button.btn.btn-primary#jsProgress{:type => "button", :style=>"margin-top: 25px"} Progress
+            %label.control-label{:for => ""} &nbsp
+            %button.btn.btn-primary#jsReset{:type => "button", :style=>"margin-top: 25px"} Reset
+            %label.control-label{:for => ""} &nbsp
+            %button.btn.btn-primary#jsUp{:type => "button", :style=>"margin-top: 25px"} Up
+            %label.control-label{:for => ""} &nbsp
+            %button.btn.btn-primary#jsAdd{:type => "button", :style=>"margin-top: 25px"} Add
+      .row.jsPanel{:style=>"height: 550px;overflow-y: auto;", 'data-vol': "#{@vol.id}"}
+        / .col-sm-4.jsSubPanel
+        /   .form-group.col-sm-4
+        /     %label.control-label{:for => ""} First
+        /     %input.form-control{:autocomplete => "off", :id => "", :name => "", :type => "text"}/
+        /   .form-group.col-sm-4
+        /     %label.control-label{:for => ""} Last
+        /     %input.form-control{:autocomplete => "off", :id => "", :name => "", :type => "text"}/
+        /   .form-group.col-sm-2
+        /     %label.control-label &nbsp;
+        /     %button.btn.btn-primary{:type => "button"} Run
+        /   .form-group.col-sm-2
+        /     %label.control-label &nbsp;
+        /     %button.jsDelete.btn.btn-primary{:type => "button"} Delete
+
 
 .sm2-bar-ui.full-width.fixed.playlist-open
   .bd.sm2-main-controls
@@ -79,17 +129,6 @@
                     = audio[:name]
                   %span.label
 
-
-
 :javascript
-  $(document).ready( function() {
-    document.body.onkeyup = function(e){
-      if(e.keyCode == 32){
-        var input = "<input type='text' name='duration[]' class='get-duration' value="+ $('#js-duration').val() +">"
-        $('.duration-group').append(input)
-        $('button').blur();
-        $('input').blur();
-      }
-    }
-  } );
+
 
