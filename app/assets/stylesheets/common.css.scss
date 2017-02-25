@@ -105,3 +105,16 @@
 .class-iii{
   font-size: 25px;
 }
+.kwraper{
+  .kanji{
+    font-size: 75px;
+    font-weight: bold;
+    color: white;
+  }
+  .hanviet{
+    text-transform: uppercase;
+  }
+  .hiragana{
+    color: white;
+  }
+}

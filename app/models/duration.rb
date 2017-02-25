@@ -34,4 +34,8 @@ class Duration < ActiveRecord::Base
     self.name = "exercise-#{self.name}"
     save!
   end
+
+  def onetime_repeat
+    execute(false, 0)
+  end
 end

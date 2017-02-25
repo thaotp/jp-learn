@@ -1,0 +1,31 @@
+- @part = @nichibei.nichibei_parts.empty? ? @nichibei.nichibei_parts.build : @nichibei.nichibei_parts
+.container
+  .page
+    .page-content{:style=>"margin-top: 25px"}
+      .row
+        = form_for @nichibei, class: '' do |f|
+          = f.hidden_field :sessions, value: @sessions
+          = f.hidden_field :parts, value: @parts_number
+          .col-sm-6
+            .form-group
+              = f.text_area :body, class: 'form-control', rows: 10
+          .col-sm-6
+            .form-group
+              = f.text_field :lesson, class: 'form-control', placeholder: 'Lesson'
+            .form-group
+              = f.text_field :dvd, class: 'form-control', placeholder: 'Dvd'
+            .form-group
+              = f.submit 'Create', class: 'btn btn-primary'
+          - @sessions.to_i.times.each_with_index do |session, index|
+            .col-sm-12
+              %h4
+                = index + 1
+              - @parts_number.to_i.times.each_with_index do |value, stt|
+                .col-sm-6
+                  .form-group
+                    = f.fields_for :nichibei_parts, @part do |pt|
+                      = pt.hidden_field :stt, value: stt+1
+                      = pt.hidden_field :session, value:  index + 1
+                      = pt.text_field :body, class: 'form-control', placeholder: "Part #{stt + 1}"
+
+

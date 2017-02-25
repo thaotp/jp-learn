@@ -24,5 +24,7 @@
  *= require page
  *= require common
  *= require bar-ui
+ *= require unslider-dots
+ *= require unslider
  *= require_self
  */

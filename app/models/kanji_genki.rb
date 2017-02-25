@@ -27,4 +27,25 @@ class KanjiGenki < ActiveRecord::Base
     q = "#{self.hanviet} (#{self.hiragana.romaji}): #{self.mean} - #{self.origin}"
     (options << [self.id, q]).shuffle
   end
+
+  require 'csv'
+  def self.to_csv_hanviet(options = {})
+    file = CSV.open("#{Dir.pwd}/csv/kanji-genki#{Time.now}.csv", "w") do |csv|
+      all.each do |word|
+        word.hanviet = word.hanviet.mb_chars.upcase.to_s
+        csv << word.attributes.values_at(*[:name,:hiragana , :mean, :hanviet, :lesson_id].map(&:to_s))
+      end
+    end
+  end
+
+  def self.quizlet
+    all.each do |w|
+      puts "#{w.hiragana};"
+      puts w.name
+      puts w.hanviet
+      puts "#{w.mean}-"
+    end
+    false
+  end
 end
+

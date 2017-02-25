@@ -31,4 +31,120 @@ class KanjiB < ActiveRecord::Base
     end
     create!(data)
   end
+
+  def self.family_with(words: [])
+    _s = ''
+    samples = self.where(kanji: words).select(:id, :sample, :hanviet, :mean, :kanji).select do |word|
+      (word.sample.chars - words).empty? && word.sample.chars.size > 1
+    end
+    count = 0
+    ones = []
+    others = []
+    samples.group_by(&:kanji).each do |d|
+      if d[1].size == 1
+        ones << d
+      else
+        others << d
+      end
+    end
+    (ones + others).each_with_index do |d, index|
+      p "-----------------#{index}---#{d[0]}-----------------"
+      d[1].each do |l|
+        p l
+      end
+    end
+    'Done .'
+  end
+
+  def self.clear_dup(ids: ids)
+    words = self.where(id: ids)
+    in_words = words.pluck(:sample)
+    words = words.select(:id, :kanji, :sample, :hanviet).shuffle.select do |word|
+      in_words.delete(word.sample)
+      str = in_words.join('')
+      first = word.sample.chars[0]
+      last  = word.sample.chars[1]
+      !(str.include?(first) && str.include?(last))
+    end
+    words.each do |o|
+      p o
+    end
+    words.map(&:id)
+  end
+
+  def self.find_with(words: [])
+    records = self.where(sample: (words.combination(2).to_a + words.reverse.combination(2).to_a).map(&:join))
+
+    emptys = []
+    exists = []
+    results = []
+    words.each do |word|
+      next if exists.include?(word)
+      childs = records.where(kanji: word).where.not(kanji: exists)
+      if childs.empty?
+        emptys << word
+        next
+      end
+      child = childs.select do |wo|
+        !(exists - wo.sample.chars).empty?
+      end.sample
+      child = childs.sample if child.blank?
+      # exists << child.sample.chars.select do |wo|
+      #   wo != word
+      # end.join
+      exists = (exists << child.sample.chars).flatten.uniq
+      results << child
+    end
+    emptys = emptys.delete_if do |word|
+      exists.include?(word)
+    end
+    p results.size
+    p exists.size
+    results.each do |word|
+      p word
+    end
+    p emptys
+    self.where(id: results.map(&:id))
+  end
+
+  def self.get_empty(words: [])
+    results = []
+    words.each do |word|
+      search = KanjiB.where(kanji: word).select do |wo|
+        if wo.sample.chars[0] == word
+          wo.sample.chars[0] == word && wo.sample.chars.size == 2 && wo.hanviet.present?
+        else
+          wo.sample.chars.size == 2 && wo.hanviet.present?
+        end
+      end.sample
+      p word if search.blank?
+      results << search
+    end
+    results.map do |re|
+      p re if re.try(:id).nil?
+      re.try(:id)
+    end
+    # KanjiB.where(id: results).uniq
+  end
+
+  def self.quizlet
+    old_logger = ActiveRecord::Base.logger
+    ActiveRecord::Base.logger = nil
+    all.each do |w|
+      w.hanviet = w.hanviet.mb_chars.upcase.to_s if w.hanviet.present?
+      puts "#{w.sample};"
+      puts "#{w.sample}"
+      puts w.hanviet
+      puts "#{w.mean}"
+      w.sample.chars.each_with_index do |k, index|
+        if index == 0
+          puts "#{k}: #{KanjiC.where(kanji: k).pluck(:vn_mean).sample}"
+        else
+          puts "#{k}: #{KanjiC.where(kanji: k).pluck(:vn_mean).sample}+"
+        end
+      end
+    end
+    ActiveRecord::Base.logger = old_logger
+    false
+  end
 end

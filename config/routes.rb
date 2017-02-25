@@ -63,6 +63,7 @@ Rails.application.routes.draw do
   get '/kanji/write' => 'home#public'
   get '/kanji/example' => 'kanjis#example'
   get '/kanji/n4words' => 'kanjis#n4words'
+  get '/kanji/kanji512' => 'kanjis#kanji512'
   get '/type' => 'words#type'
 
   resources :words, only: [:show]
@@ -78,7 +79,15 @@ Rails.application.routes.draw do
     post 'p_audio', on: :collection
     get 'results', on: :collection
   end
-  resources :grammars, only: [:show]
+  resources :typings do
+    get 'search', on: :collection
+  end
+
+  resources :nichibeis
+
+  resources :grammars, only: [:show] do
+    get 'learn',  on: :collection
+  end
 
   scope "/api/v1" do
     resources :words, :defaults => { :format => 'json' } do

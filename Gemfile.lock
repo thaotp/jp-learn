@@ -73,6 +73,8 @@ GEM
     domain_name (0.5.20160615)
       unf (>= 0.0.5, < 1.0.0)
     ejs (1.1.1)
+    enumerize (2.0.1)
+      activesupport (>= 3.2)
     erubis (2.7.0)
     excon (0.51.0)
     execjs (2.7.0)
@@ -369,6 +371,7 @@ DEPENDENCIES
   delayed_job_active_record
   devise
   ejs
+  enumerize
   fog
   gon
   haml
@@ -396,4 +399,4 @@ DEPENDENCIES
   wkhtmltopdf-binary (~> 0.12.3)
 
 BUNDLED WITH
-   1.10.3
+   1.12.5

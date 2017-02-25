@@ -1,0 +1,15 @@
+.container
+  .page
+    .page-content
+      .duration-group
+      .row
+        - @nichibeis.each do |nichibei|
+          - nichibei.replace.each_with_index do |body, index|
+            .col-sm-12
+              .panel.panel-bordered
+                .panel-body{style: "color: black;font-size: 40px;"}
+                  %h4
+                    = "#{nichibei.lesson} - #{index + 1} - #{nichibei.dvd.to_i + index}"
+                  = paragraph(body)
+
+

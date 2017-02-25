@@ -1,4 +1,5 @@
 class KanjisController < ApplicationController
+  layout 'simple'
   def index
     kanjis = Kanji.all.order(:id)
     render json: kanjis
@@ -19,6 +20,10 @@ class KanjisController < ApplicationController
 
   def n4words
     @words = JpltN4.order(romaji: :asc)
+  end
+
+  def kanji512
+    @words = MinaKotoba.where(lesson_id: 31)
   end
 
   private

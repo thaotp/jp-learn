@@ -1,0 +1,28 @@
+.container
+  .page
+    .page-content
+      .col-sm-12
+        / Example Placeholder
+        .example-wrap
+          %h4.example-title Placeholder
+          %input#inputPlaceholder.jsshida.form-control{:placeholder => "placeholder", :style => "\n    height: 60px;\n    font-size: 35px;\n    color: black;\n", :type => "text"}/
+        .jsAppend
+        / End Example Placeholder
+:javascript
+  $(document).ready( function() {
+    $('.jsshida').keydown(function(e){
+      if( e.which == 13 ){
+
+        $.ajax({
+          url: '/typings/search',
+          type: 'GET',
+          dataType: 'json',
+          data: { word:  $('.jsshida').val()}
+        }).success(function( res ) {
+
+        });
+
+        $('.jsshida').val('')
+      }
+    });
+  });

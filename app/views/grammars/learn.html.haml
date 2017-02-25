@@ -1,0 +1,46 @@
+.container
+  .row
+    .col-sm-12
+      .page.animsition
+        .page-header
+          %h1
+            123
+        .page-content
+          .panel
+            .panel-body.container-fluid
+              .row
+                .col-sm-6
+                  .js-wrap{'data-type': @type}
+                    %h1
+                      - if @word.kanji.present?
+                        %ruby
+                          %rb
+                            = @word.kanji
+                          %rp (
+                          %rt
+                            = @word.hiragana
+                          %rp )
+                      - else
+                        = @word.hiragana
+                    %h3{style: 'text-transform: uppercase;'}
+                      = @word.cn_mean
+                    %h3
+                      = @word.mean
+                .col-sm-6
+                  %input#inputRounded.form-control.round{:style => "\n    height: 100px;\n    font-size: 60px;\n    color: black;\n    font-weight: 500;\n", :type => "text"}/
+              .text-right.clearfix
+:javascript
+  $(document).ready( function() {
+    function checkKey(e) {
+        e = e || window.event;
+        if(e.keyCode == 39){
+          var url = '/grammars/learn.json?type='+$('.js-wrap').data('type')
+          $.get(url, function( data ) {
+            $('.js-wrap').html("<h1><ruby><rb>"+ data.kanji +"</rb><rp>(</rp><rt>"+ data.hiragana+" </rt><rp>)</rp>   </ruby></h1><h3 style='text-transform: uppercase;'> lệ</h3><h3>"+data.mean+"</h3>")
+          });
+        }
+    }
+
+    document.onkeydown = checkKey;
+  });
+

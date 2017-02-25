@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161224094319) do
+ActiveRecord::Schema.define(version: 20170216062800) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -241,6 +241,7 @@ ActiveRecord::Schema.define(version: 20161224094319) do
     t.datetime "updated_at",                    null: false
     t.boolean  "stick",         default: false
     t.string   "audio_link"
+    t.string   "word_type"
   end
 
   create_table "mina_reibuns", force: :cascade do |t|
@@ -249,6 +250,33 @@ ActiveRecord::Schema.define(version: 20161224094319) do
     t.string   "roumaji"
     t.string   "vi_mean"
     t.integer  "type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "nichibei_parts", force: :cascade do |t|
+    t.integer  "nichibei_id"
+    t.string   "body"
+    t.integer  "stt"
+    t.integer  "session"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "nichibeis", force: :cascade do |t|
+    t.string   "lesson"
+    t.string   "body"
+    t.string   "dvd"
+    t.integer  "sessions"
+    t.integer  "parts"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "nichibes", force: :cascade do |t|
+    t.string   "lesson"
+    t.string   "body"
+    t.string   "dvd"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

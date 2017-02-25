@@ -68,3 +68,4 @@ gem 'mechanize'
 gem "http"
 gem 'wkhtmltopdf-binary', '~> 0.12.3'
 gem 'wicked_pdf'
+gem 'enumerize'

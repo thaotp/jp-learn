@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  nichibe_id: 1
+  body: MyString
+  stt: 1
+
+two:
+  nichibe_id: 1
+  body: MyString
+  stt: 1

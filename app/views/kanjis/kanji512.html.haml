@@ -1,0 +1,29 @@
+.container
+  .page
+    .page-content
+      .row
+        .col-sm-offset-1.col-sm-10
+          .kwraper{:style => "padding-top: 100px;background-color:#99988E;margin-top:100px;"}
+            .kslider{:style => "text-align: center;color: black;font-size: 30px;"}
+              %ul
+                - @words.each do |word|
+                  %li
+                    %p.kanji
+                      = word.kanji
+                    %p.hanviet
+                      = word.cn_mean
+                    %p.hiragana
+                      = word.hiragana
+                    %p
+                      = word.roumaji
+                    %p.mean
+                      = word.mean
+:javascript
+  jQuery(document).ready(function($) {
+    $('.kslider').unslider({
+      animation: 'fade',
+      autoplay: true,
+      arrows: false,
+      delay: 3500
+    });
+  });
