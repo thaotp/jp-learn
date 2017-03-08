@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  en_mean: MyString
+  vn_mean: MyString
+  hanviet: MyString
+  kanji: MyString
+  radical: false
+
+two:
+  en_mean: MyString
+  vn_mean: MyString
+  hanviet: MyString
+  kanji: MyString
+  radical: false

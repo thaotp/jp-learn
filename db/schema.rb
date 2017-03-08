@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170216062800) do
+ActiveRecord::Schema.define(version: 20170306075853) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -142,6 +142,17 @@ ActiveRecord::Schema.define(version: 20170216062800) do
     t.datetime "updated_at",              null: false
   end
 
+  create_table "kanji_damages", force: :cascade do |t|
+    t.string   "en_mean"
+    t.string   "vn_mean"
+    t.string   "hanviet"
+    t.string   "kanji"
+    t.boolean  "radical"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string   "jp_mean"
+  end
+
   create_table "kanji_examples", force: :cascade do |t|
     t.string   "name",       default: ""
     t.string   "name_jp",    default: ""
@@ -194,6 +205,36 @@ ActiveRecord::Schema.define(version: 20170216062800) do
     t.text     "example_tb"
     t.string   "level"
     t.string   "r_type",     default: ""
+  end
+
+  create_table "mimi_grammars", force: :cascade do |t|
+    t.string   "title"
+    t.string   "mean"
+    t.string   "example"
+    t.string   "use"
+    t.string   "level"
+    t.string   "note"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "mimi_kara_kotobas", force: :cascade do |t|
+    t.string   "cn_mean"
+    t.string   "favorite"
+    t.string   "hiragana"
+    t.string   "kanji"
+    t.string   "kanji_id"
+    t.string   "lesson_id"
+    t.string   "mean"
+    t.string   "mean_unsigned"
+    t.string   "roumaji"
+    t.string   "tag"
+    t.boolean  "stick",         default: false
+    t.string   "audio_link"
+    t.string   "word_type"
+    t.integer  "stt"
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
   end
 
   create_table "mina_bunkeis", force: :cascade do |t|
@@ -370,5 +411,48 @@ ActiveRecord::Schema.define(version: 20170216062800) do
     t.boolean  "hard",       default: false
     t.string   "today"
   end
+
+
+  create_view :search_kotobas,  sql_definition: <<-SQL
+      SELECT 'mina_kotoba'::text AS type,
+      mina_kotobas.id,
+      mina_kotobas.cn_mean,
+      mina_kotobas.favorite,
+      mina_kotobas.hiragana,
+      mina_kotobas.kanji,
+      mina_kotobas.kanji_id,
+      mina_kotobas.lesson_id,
+      mina_kotobas.created_at,
+      mina_kotobas.updated_at,
+      mina_kotobas.mean,
+      mina_kotobas.mean_unsigned,
+      mina_kotobas.roumaji,
+      mina_kotobas.tag,
+      mina_kotobas.stick,
+      mina_kotobas.audio_link,
+      mina_kotobas.word_type,
+      NULL::integer AS stt
+     FROM mina_kotobas
+  UNION
+   SELECT 'mimi_kara_kotoba'::text AS type,
+      mimi_kara_kotobas.id,
+      mimi_kara_kotobas.cn_mean,
+      mimi_kara_kotobas.favorite,
+      mimi_kara_kotobas.hiragana,
+      mimi_kara_kotobas.kanji,
+      mimi_kara_kotobas.kanji_id,
+      mimi_kara_kotobas.lesson_id,
+      mimi_kara_kotobas.created_at,
+      mimi_kara_kotobas.updated_at,
+      mimi_kara_kotobas.mean,
+      mimi_kara_kotobas.mean_unsigned,
+      mimi_kara_kotobas.roumaji,
+      mimi_kara_kotobas.tag,
+      mimi_kara_kotobas.stick,
+      mimi_kara_kotobas.audio_link,
+      mimi_kara_kotobas.word_type,
+      mimi_kara_kotobas.stt
+     FROM mimi_kara_kotobas;
+  SQL
 
 end

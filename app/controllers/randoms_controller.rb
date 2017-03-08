@@ -53,15 +53,14 @@ class RandomsController < ApplicationController
 
   def boost
     records = if params[:type] == 'grammar'
-      Grammar.order(id: :desc)
+      MimiGrammar.distinct.where(level: params[:lesson]).order(id: :asc)
     elsif params[:type] == 'kanji'
-      []
+      KanjiC.distinct.where(level: params[:lesson]).order(id: :asc)
     elsif params[:type] == 'shadow'
       Shadow.order(id: :asc)
     else
-      MinaKotoba.where(lesson_id: params[:lesson]).order(id: :asc)
+      SearchKotoba.distinct.where(lesson_id: params[:lesson]).order(id: :asc)
     end
-    p records
     render json: records
   end
 

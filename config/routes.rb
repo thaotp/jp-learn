@@ -84,6 +84,8 @@ Rails.application.routes.draw do
   end
 
   resources :nichibeis
+  resources :kanji_damages
+  resources :editations
 
   resources :grammars, only: [:show] do
     get 'learn',  on: :collection

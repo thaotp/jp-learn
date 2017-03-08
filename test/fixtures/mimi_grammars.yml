@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  mean: MyString
+  example: MyString
+  use: MyString
+
+two:
+  title: MyString
+  mean: MyString
+  example: MyString
+  use: MyString

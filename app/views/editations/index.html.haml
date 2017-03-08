@@ -1,0 +1,20 @@
+.container.kanji-dammage
+  .page
+    .page-content
+      .row
+        - @records.each do |record|
+          .col-sx-6
+            - @attrs ||= record.class.column_names.map(&:to_sym) - [:id, :created_at, :updated_at, :level]
+            .panel.panel-bordered
+              %h2.panel-heading
+                .panel-title
+                  = record.id
+              .panel-body
+                = form_for record, url: edit_editation_path(record) do |f|
+                  - @attrs.each do |attr|
+                    .row
+                      .form-group
+                        %lable.control-label.uppercase
+                          = attr.to_s
+                        = f.text_field attr, class: 'form-control inline-edit', data: {url: "editations/#{record.id}", attribute: attr, class: record.class.name, value: record[attr]}
+

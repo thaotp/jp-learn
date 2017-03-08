@@ -25,4 +25,26 @@
 //= require bar-ui.js
 //= require main.js
 //= require unslider-min.js
+$( document ).ready(function() {
+  $('.inline-edit').editable({
+      mode: 'inline',
+      type: 'textarea',
+      showbuttons: false,
+      autotext: 'auto',
+      pk: 1,
+      onblur: 'submit',
+      params: function(params) {
+        params.attribute = $(this).data('attribute')
+        params.class = $(this).data('class')
+        return params;
+      },
+      ajaxOptions: {
+        type: 'put',
+        dataType: 'json'
+      },
+      success: function(response, newValue) {
+        $(this).val(newValue)
+      }
+  });
+});
 

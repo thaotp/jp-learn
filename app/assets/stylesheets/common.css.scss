@@ -118,3 +118,34 @@
     color: white;
   }
 }
+.kanji-dammage{
+  table{
+    .kanji{
+      font-size: 75px;
+      a{
+        text-decoration: none !important;
+      }
+      &.radical a{
+        color: black;
+      }
+    }
+    .hanviet{
+      font-size: 50px;
+      text-transform: uppercase;
+      color: black;
+      font-weight: 400;
+    }
+    .bs{
+      font-size: 20px;
+      color: black;
+    }
+  }
+}
+.editable-input{
+  textarea{
+    width: 500px !important;
+  }
+}
+.uppercase{
+  text-transform: capitalize;
+}

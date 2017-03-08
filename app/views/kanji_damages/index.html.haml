@@ -1,0 +1,42 @@
+.container.kanji-dammage
+  .page
+    .page-content
+      .duration-group
+      .row
+        .table-responsive
+          %table.table.table-hover
+            %thead
+              %tr
+                %th
+                %th
+                %th
+                %th
+                %th
+                %th
+            %tbody
+              - @kanjis.each do |kanji|
+                %tr
+                  %td
+                    = kanji.id
+                  %td.kanji{class: "#{kanji.radical ? 'radical' : ''}"}
+                    = link_to kanji.kanji, "http://www.kanjidamage.com/kanji/search?q=#{kanji.kanji}", target: "_blank"
+                  %td.hanviet
+                    = kanji.hanviet
+                  %td
+                    = kanji.jp_mean
+                  %td
+                    %p
+                      = kanji.vn_mean
+                    %p
+                      = kanji.en_mean
+                  %td.bs
+                    - kanji.kanji_bs.each do |b|
+                      - next if b.sample.chars.size == 1
+                      %ruby
+                        = b.sample
+                        %rp (
+                        %rt
+                          = b.hanviet
+                        %rp )
+                      %span ,
+

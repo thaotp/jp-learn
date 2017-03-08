@@ -167,7 +167,8 @@ class MinaKotoba < ActiveRecord::Base
     self.all.each_with_index do |word, index|
       word.fwrite(index + 1)
     end
-    p "Todo/./ffmpeg -framerate 1/3 -i Todo/#{@@folder}/img%03d.png -s:v 1280x720 -c:v libx264 -profile:v high -crf 20 -pix_fmt yuv420p Todo/#{self.to_s}/#{@@folder}.mp4"
+    system "Todo/./ffmpeg -framerate 1/3 -i Todo/#{@@folder}/img%03d.png -s:v 1280x720 -c:v libx264 -profile:v high -crf 20 -pix_fmt yuv420p Todo/#{self.to_s}/#{@@folder}.mp4"
+    FileUtils.rm_rf("#{folder}")
     # self.update_all(learned: true)
   end
 

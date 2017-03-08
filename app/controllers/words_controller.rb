@@ -1,3 +1,4 @@
+require 'mojinizer'
 class WordsController < ApplicationController
   protect_from_forgery :except => [:sync]
   def index
@@ -58,7 +59,20 @@ class WordsController < ApplicationController
     key = params[:word]
     id = key.to_i
     id = -1 if id == 0
-    words = MinaKotoba.where('id = ? OR hiragana LIKE ? OR kanji LIKE ? OR mean LIKE ? OR roumaji LIKE ?', "#{id}", "%#{key}%", "%#{key}%", "%#{key}%", "%#{key}%")
+    p 'aaa'.hiragana
+
+    words = if params[:type] == 'kanji'
+      if key.present?
+        KanjiC.where('jp_mean LIKE ? OR kanji LIKE ? OR hanviet LIKE LOWER(?)', "%#{key}%", "%#{key}%", "%#{key}%")
+      else
+        KanjiC.where(level: params[:lesson]).order(id: :asc)
+      end
+    elsif params[:type] == 'grammar'
+      MimiGrammar.where('title LIKE ? OR title LIKE ? OR mean LIKE ? or example LIKE ? or use LIKE ?', "%#{key}%", "%#{key.hiragana}%", "%#{key}%", "%#{key}%", "%#{key}%")
+    else
+      SearchKotoba.where('id = ? OR hiragana LIKE ? OR kanji LIKE ? OR mean LIKE ? OR roumaji LIKE ?', "#{id}", "%#{key}%", "%#{key}%", "%#{key}%", "%#{key}%")
+    end
+
     render json: words
   end
 

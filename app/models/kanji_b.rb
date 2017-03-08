@@ -1,6 +1,7 @@
 class KanjiB < ActiveRecord::Base
   ActiveRecord::Base.establish_connection :kanji_b_japanse if Rails.env == "development"
   self.table_name = 'kanji_bs'
+  belongs_to :kanji_damage, foreign_key: 'kanji', primary_key: 'kanji'
   def self.raw_hiragana
     KanjiC.where(level: [4, 5]).pluck(:kanji).each do |kn|
       KanjiB.where(kanji: kn).where(romaji: "").each do |kan|

@@ -96,6 +96,7 @@ AudioAnimal.template = function(data){
 }
 
 AudioAnimal.speak = function(){
+  if( $('#jsTotalAudio').length < 1 ) return;
   var old = $('#jsTotalAudio').val()
   var newV = ''
   if(old == ''){
