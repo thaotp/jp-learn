@@ -17,4 +17,10 @@ class Grammar < ActiveRecord::Base
   def self.make_url digest
     "https://i.gyazo.com/#{digest}.png"
   end
+
+  def get_link
+    # ["くらい", "くらいなら", "うちに", "をちゅうしんに", "をはじめ", "にたいして", "において", "にわたって", "にとって", "による"]
+    # page = Nokogiri::HTML(open(url))
+    # link = page.css('a').map { |link| link['href'] }[0]
+  end
 end

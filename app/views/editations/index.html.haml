@@ -4,11 +4,13 @@
       .row
         - @records.each do |record|
           .col-sx-6
-            - @attrs ||= record.class.column_names.map(&:to_sym) - [:id, :created_at, :updated_at, :level]
+            - @attrs ||= record.class.column_names.map(&:to_sym) - except_arrays
             .panel.panel-bordered
               %h2.panel-heading
                 .panel-title
                   = record.id
+                  - if @records.size == 1
+                    = link_to "Next", editations_path(id: record.id.next, class: record.class.name)
               .panel-body
                 = form_for record, url: edit_editation_path(record) do |f|
                   - @attrs.each do |attr|

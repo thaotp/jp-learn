@@ -14,7 +14,7 @@ class RandomsController < ApplicationController
   end
 
   def minakotoba
-    models = [MinaKotoba, MinaReibun, KanjiGenki, MinaGrammar, MinaBunkei, JpltN4]
+    models = [SearchKotoba, MinaKotoba, MinaReibun, KanjiGenki, MinaGrammar, MinaBunkei, JpltN4]
     now = models[0]
     grammar_name = MinaGrammar.random.as_json(:only => [:id, :name, :lesson_id])
     words = now.top_three.fetch_quiz

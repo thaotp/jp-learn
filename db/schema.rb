@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170306075853) do
+ActiveRecord::Schema.define(version: 20170413070545) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -151,6 +151,7 @@ ActiveRecord::Schema.define(version: 20170306075853) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string   "jp_mean"
+    t.integer  "level"
   end
 
   create_table "kanji_examples", force: :cascade do |t|
@@ -207,6 +208,15 @@ ActiveRecord::Schema.define(version: 20170306075853) do
     t.string   "r_type",     default: ""
   end
 
+  create_table "mimi_example_kotobas", force: :cascade do |t|
+    t.string   "example"
+    t.string   "example_mean"
+    t.string   "example_hiragana"
+    t.integer  "mimi_kara_kotoba_id"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+  end
+
   create_table "mimi_grammars", force: :cascade do |t|
     t.string   "title"
     t.string   "mean"
@@ -214,8 +224,9 @@ ActiveRecord::Schema.define(version: 20170306075853) do
     t.string   "use"
     t.string   "level"
     t.string   "note"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.string   "tag",        default: "none"
   end
 
   create_table "mimi_kara_kotobas", force: :cascade do |t|
@@ -235,6 +246,8 @@ ActiveRecord::Schema.define(version: 20170306075853) do
     t.integer  "stt"
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
+    t.string   "example"
+    t.integer  "counter",       default: 0
   end
 
   create_table "mina_bunkeis", force: :cascade do |t|
@@ -283,6 +296,8 @@ ActiveRecord::Schema.define(version: 20170306075853) do
     t.boolean  "stick",         default: false
     t.string   "audio_link"
     t.string   "word_type"
+    t.string   "example"
+    t.integer  "counter",       default: 0
   end
 
   create_table "mina_reibuns", force: :cascade do |t|
@@ -412,6 +427,7 @@ ActiveRecord::Schema.define(version: 20170306075853) do
     t.string   "today"
   end
 
+  add_foreign_key "mimi_example_kotobas", "mimi_kara_kotobas"
 
   create_view :search_kotobas,  sql_definition: <<-SQL
       SELECT 'mina_kotoba'::text AS type,
@@ -431,6 +447,8 @@ ActiveRecord::Schema.define(version: 20170306075853) do
       mina_kotobas.stick,
       mina_kotobas.audio_link,
       mina_kotobas.word_type,
+      mina_kotobas.example,
+      mina_kotobas.counter,
       NULL::integer AS stt
      FROM mina_kotobas
   UNION
@@ -451,6 +469,8 @@ ActiveRecord::Schema.define(version: 20170306075853) do
       mimi_kara_kotobas.stick,
       mimi_kara_kotobas.audio_link,
       mimi_kara_kotobas.word_type,
+      mimi_kara_kotobas.example,
+      mimi_kara_kotobas.counter,
       mimi_kara_kotobas.stt
      FROM mimi_kara_kotobas;
   SQL

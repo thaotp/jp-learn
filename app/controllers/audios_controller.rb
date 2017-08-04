@@ -43,10 +43,16 @@ class AudiosController < ApplicationController
 
   def p_audio
     durations = params[:durations]
-    durations.map!(&:to_i) if durations.present?
+
+    if durations.present?
+      durations.map! do |d|
+        eval(d)
+      end
+    end
     audio = Duration.new(link: params[:link], durations: params[:durations], index_link: params[:index_link], option: params[:option], vol_aulm_id: params[:vol_aulm_id])
     audio.save
     # audio.execute if audio.save!
     render json: {}
   end
 end
+

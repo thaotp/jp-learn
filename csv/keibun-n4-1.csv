@@ -1,40 +1,20 @@
-[あなたは]　マイク・ミラーさんですか。,[anata ha] maiku. mirā san desu ka. ,Anh có phải là anh Miller không?,"[あなたは]　マイク・ミラーさんですか。
-[anata ha] maiku. mirā san desu ka. ","[あなたは]　マイク・ミラーさんですか。
-Anh có phải là anh Miller không?","[anata ha] maiku. mirā san desu ka. 
-Anh có phải là anh Miller không?",1
-。。。はい、[わたしは]　マイク・ミラーです。,"... hai, [watashi ha] maiku. mirā desu. ","...Vâng, tôi là Mike Miller.","。。。はい、[わたしは]　マイク・ミラーです。
-... hai, [watashi ha] maiku. mirā desu. ","。。。はい、[わたしは]　マイク・ミラーです。
-...Vâng, tôi là Mike Miller.","... hai, [watashi ha] maiku. mirā desu. 
-...Vâng, tôi là Mike Miller.",1
-ミラーさんは　学生ですか。,mirā san ha gakusei desu ka. ,Anh Miller có phải là sinh viên không?,"ミラーさんは　学生ですか。
-mirā san ha gakusei desu ka. ","ミラーさんは　学生ですか。
-Anh Miller có phải là sinh viên không?","mirā san ha gakusei desu ka. 
-Anh Miller có phải là sinh viên không?",1
-。。。いいえ、[わたしは]　学生じゃ　ありません。会社員です。,"... iie, [watashi ha] gakusei ja ari mase n. kaisha in desu. ","...Không, tôi không phải là sinh viên. Tôi là nhân viên công ty.","。。。いいえ、[わたしは]　学生じゃ　ありません。会社員です。
-... iie, [watashi ha] gakusei ja ari mase n. kaisha in desu. ","。。。いいえ、[わたしは]　学生じゃ　ありません。会社員です。
-...Không, tôi không phải là sinh viên. Tôi là nhân viên công ty.","... iie, [watashi ha] gakusei ja ari mase n. kaisha in desu. 
-...Không, tôi không phải là sinh viên. Tôi là nhân viên công ty.",1
-ワンさんは　エンジニアですか。,wan san ha enjinia desu ka. ,Ông Wang có phải là kĩ sư không?,"ワンさんは　エンジニアですか。
-wan san ha enjinia desu ka. ","ワンさんは　エンジニアですか。
-Ông Wang có phải là kĩ sư không?","wan san ha enjinia desu ka. 
-Ông Wang có phải là kĩ sư không?",1
-。。。いいえ、ワンさんは　エンジニアじゃ　ありません。医者です。,"... iie, wan san ha enjinia ja ari mase n. isha desu. ","...Không, ông Wang không phải là kĩ sư. Ông ấy là bác sĩ.","。。。いいえ、ワンさんは　エンジニアじゃ　ありません。医者です。
-... iie, wan san ha enjinia ja ari mase n. isha desu. ","。。。いいえ、ワンさんは　エンジニアじゃ　ありません。医者です。
-...Không, ông Wang không phải là kĩ sư. Ông ấy là bác sĩ.","... iie, wan san ha enjinia ja ari mase n. isha desu. 
-...Không, ông Wang không phải là kĩ sư. Ông ấy là bác sĩ.",1
-あの方は　どなたですか。,ano hou ha donata desu ka. ,Vị kia là ai?,"あの方は　どなたですか。
-ano hou ha donata desu ka. ","あの方は　どなたですか。
-Vị kia là ai?","ano hou ha donata desu ka. 
-Vị kia là ai?",1
-。。。ワットさんです。さくら大学の　先生です。,... watto san desu. sakura daigaku no sensei desu. ,...Đó là ông Watt. Ông ấy là giảng viên của trường Đại học Sakura.,"。。。ワットさんです。さくら大学の　先生です。
-... watto san desu. sakura daigaku no sensei desu. ","。。。ワットさんです。さくら大学の　先生です。
-...Đó là ông Watt. Ông ấy là giảng viên của trường Đại học Sakura.","... watto san desu. sakura daigaku no sensei desu. 
-...Đó là ông Watt. Ông ấy là giảng viên của trường Đại học Sakura.",1
-テレサちゃんは　何歳ですか。,teresa chan ha nan sai desu ka. ,Em Teresa mấy tuổi?,"テレサちゃんは　何歳ですか。
-teresa chan ha nan sai desu ka. ","テレサちゃんは　何歳ですか。
-Em Teresa mấy tuổi?","teresa chan ha nan sai desu ka. 
-Em Teresa mấy tuổi?",1
-。。。９歳です。,... kyuu sai desu. ,...9 tuổi.,"。。。９歳です。
-... kyuu sai desu. ","。。。９歳です。
-...9 tuổi.","... kyuu sai desu. 
-...9 tuổi.",1
+1.0 [あなたは]　マイク・ミラーさんですか。,1.0,"[anata ha] maiku. mirā san desu ka. 
+Anh có phải là anh Miller không?"
+1.1 。。。はい、[わたしは]　マイク・ミラーです。,1.1,"... hai, [watashi ha] maiku. mirā desu. 
+...Vâng, tôi là Mike Miller."
+1.2 ミラーさんは　学生ですか。,1.2,"mirā san ha gakusei desu ka. 
+Anh Miller có phải là sinh viên không?"
+1.3 。。。いいえ、[わたしは]　学生じゃ　ありません。会社員です。,1.3,"... iie, [watashi ha] gakusei ja ari mase n. kaisha in desu. 
+...Không, tôi không phải là sinh viên. Tôi là nhân viên công ty."
+1.4 ワンさんは　エンジニアですか。,1.4,"wan san ha enjinia desu ka. 
+Ông Wang có phải là kĩ sư không?"
+1.5 。。。いいえ、ワンさんは　エンジニアじゃ　ありません。医者です。,1.5,"... iie, wan san ha enjinia ja ari mase n. isha desu. 
+...Không, ông Wang không phải là kĩ sư. Ông ấy là bác sĩ."
+1.6 あの方は　どなたですか。,1.6,"ano hou ha donata desu ka. 
+Vị kia là ai?"
+1.7 。。。ワットさんです。さくら大学の　先生です。,1.7,"... watto san desu. sakura daigaku no sensei desu. 
+...Đó là ông Watt. Ông ấy là giảng viên của trường Đại học Sakura."
+1.8 テレサちゃんは　何歳ですか。,1.8,"teresa chan ha nan sai desu ka. 
+Em Teresa mấy tuổi?"
+1.9 。。。９歳です。,1.9,"... kyuu sai desu. 
+...9 tuổi."

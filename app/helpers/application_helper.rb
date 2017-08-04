@@ -10,4 +10,8 @@ module ApplicationHelper
       end
     end.join.html_safe
   end
+
+  def except_arrays
+    [:id, :created_at, :updated_at, :level, :kanji_id, :mean_unsigned, :roumaji, :audio_link, :word_type, :stt, :counter, :stick, :favorite]
+  end
 end

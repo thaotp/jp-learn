@@ -134,10 +134,16 @@
       text-transform: uppercase;
       color: black;
       font-weight: 400;
+      visibility: hidden;
     }
     .bs{
       font-size: 20px;
       color: black;
+    }
+    tr:active{
+      .hanviet{
+        visibility: visible;
+      }
     }
   }
 }

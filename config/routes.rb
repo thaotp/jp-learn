@@ -89,6 +89,7 @@ Rails.application.routes.draw do
 
   resources :grammars, only: [:show] do
     get 'learn',  on: :collection
+    get 'list',  on: :collection
   end
 
   scope "/api/v1" do

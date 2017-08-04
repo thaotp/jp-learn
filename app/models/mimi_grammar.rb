@@ -1,4 +1,10 @@
 class MimiGrammar < ActiveRecord::Base
+  # extend Enumerize
+  # enumerize :tag,
+  #   in: %i(none dict),
+  #   scope: true,
+  #   predicates: { prefix: true },
+  #   default: :none
   def self.import_csv(url)
     require 'csv'
     data = []

@@ -14,4 +14,8 @@ class GrammarsController < ApplicationController
     end
   end
 
+  def list
+
+  end
+
 end

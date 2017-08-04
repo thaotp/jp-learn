@@ -18,4 +18,5 @@ class RadicalsController < ApplicationController
   def permit_params
     params.require(:radical).permit(:times)
   end
+
 end

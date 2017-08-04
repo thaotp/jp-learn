@@ -1,4 +1,5 @@
 class KanjiB < ActiveRecord::Base
+  include ModelExtend
   ActiveRecord::Base.establish_connection :kanji_b_japanse if Rails.env == "development"
   self.table_name = 'kanji_bs'
   belongs_to :kanji_damage, foreign_key: 'kanji', primary_key: 'kanji'
@@ -48,6 +49,9 @@ class KanjiB < ActiveRecord::Base
         others << d
       end
     end
+    # (words - samples.map(&:kanji)).each do |kanji|
+    #   p self.where(kanji: kanji).sample
+    # end
     (ones + others).each_with_index do |d, index|
       p "-----------------#{index}---#{d[0]}-----------------"
       d[1].each do |l|
@@ -108,6 +112,45 @@ class KanjiB < ActiveRecord::Base
     self.where(id: results.map(&:id))
   end
 
+  def self.find_w(words: [])
+    origins = words
+    olds = KanjiC.where(level: [3,4,5]).pluck(:kanji)
+    kol = KanjiB.where(kanji: olds).pluck(:sample)
+    results = []
+    records = where(sample: kol).where(kanji: origins)
+    exists = []
+    where(kanji: origins).group_by(&:kanji).each do |d|
+      d[1].shuffle.each do |word|
+        if (words & word.sample.chars).size == 2
+          unless exists.include?(word.sample)
+            exists << word.sample
+            results << word
+          end
+          break
+        end
+      end
+    end
+    remains = records.where('"kanji_bs"."kanji" IN (?)', origins - results.map(&:sample).join('').split('').uniq)
+    remains.group_by(&:kanji).each do |d|
+      d[1].shuffle.each do |word|
+        if word.sample.kanji? && word.sample.chars.size == 2
+          results << word
+          break
+        end
+      end
+    end
+    where(id: results.map(&:id))
+  end
+
+  def self.find_t(words: [])
+    olds = KanjiC.where(level: [3,4,5]).pluck(:kanji) - words
+
+    where(kanji: words).each do |ka|
+      # (ka.sample.chars & words).size == 2
+      p ka.sample
+    end
+  end
+
   def self.get_empty(words: [])
     results = []
     words.each do |word|
@@ -128,6 +171,7 @@ class KanjiB < ActiveRecord::Base
     # KanjiB.where(id: results).uniq
   end
 
+  # For Kanji Learning
   def self.quizlet
     old_logger = ActiveRecord::Base.logger
     ActiveRecord::Base.logger = nil
@@ -147,5 +191,77 @@ class KanjiB < ActiveRecord::Base
     end
     ActiveRecord::Base.logger = old_logger
     false
+  end
+
+  # For WordPerDay
+  def self.quizlet_per_day
+    old_logger = ActiveRecord::Base.logger
+    ActiveRecord::Base.logger = nil
+    all.each do |w|
+      w.hanviet = w.hanviet.mb_chars.upcase.to_s if w.hanviet.present?
+      mean_hanviet = []
+      insert_hanviet = w.hanviet.blank?
+      w.sample.chars.each_with_index do |k, index|
+        next unless k.kanji?
+        # if index == w.sample.chars.size - 1
+        #   mean_hanviet << "#{k}: #{KanjiC.where(kanji: k).pluck(:vn_mean).sample}+"
+        # else
+
+        # end
+        mean_hanviet << "#{k}: #{KanjiC.where(kanji: k).pluck(:vn_mean).sample}"
+        if insert_hanviet
+          w.hanviet = w.hanviet.to_s
+          w.hanviet << KanjiC.where(kanji: k).pluck(:hanviet).sample.to_s
+          w.hanviet = w.hanviet.mb_chars.upcase.to_s
+        end
+      end
+      if mean_hanviet.blank?
+        mean_hanviet << '+'
+      else
+        mean_hanviet[-1] = "#{mean_hanviet[-1].to_s}+"
+      end
+      w.save! if w.changed?
+      puts "#{w.sample}^"
+      puts "#{w.hiragana} (#{w.type_w})"
+      puts w.hanviet if w.hanviet.present?
+      puts "#{w.mean}"
+      mean_hanviet.each do |k|
+        puts k
+      end
+    end
+    ActiveRecord::Base.logger = old_logger
+    false
+  end
+
+  def self.select_uniq
+    uniqs = []
+    ids = self.all.map do |record|
+      unless uniqs.include?(record.sample)
+        uniqs << record.sample
+        record.id
+      end
+    end.compact
+    where(id: ids)
+  end
+
+
+  def update_hiragana!
+    self.hiragana = Kakasi.kakasi('-JH -s', self.sample) if self.hiragana.blank?
+    save!
+  end
+
+  def self.check_empty(words = [])
+    words.each do |word|
+      fetch(word) unless exists?(sample: word)
+    end
+  end
+
+  def self.fetch(word)
+    p word
+    url = URI.encode "http://mazii.net/api/search/#{word}/20/1"
+    response = Net::HTTP.get(URI(url))
+    response = JSON.parse(response)
+    results = { mean: response["data"][0]["means"][0]["mean"], sample: word, hiragana:  Kakasi.kakasi('-JH -s', word), type_w: response["data"][0]["means"][0]['kind'] }
+    self.create(results)
   end
 end

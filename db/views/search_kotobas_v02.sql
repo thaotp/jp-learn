@@ -1,0 +1,43 @@
+SELECT 'mina_kotoba'::text AS type,
+    mina_kotobas.id,
+    mina_kotobas.cn_mean,
+    mina_kotobas.favorite,
+    mina_kotobas.hiragana,
+    mina_kotobas.kanji,
+    mina_kotobas.kanji_id,
+    mina_kotobas.lesson_id,
+    mina_kotobas.created_at,
+    mina_kotobas.updated_at,
+    mina_kotobas.mean,
+    mina_kotobas.mean_unsigned,
+    mina_kotobas.roumaji,
+    mina_kotobas.tag,
+    mina_kotobas.stick,
+    mina_kotobas.audio_link,
+    mina_kotobas.word_type,
+    null as example,
+    null as stt
+FROM mina_kotobas
+
+UNION
+
+SELECT 'mimi_kara_kotoba'::text AS type,
+    mimi_kara_kotobas.id,
+    mimi_kara_kotobas.cn_mean,
+    mimi_kara_kotobas.favorite,
+    mimi_kara_kotobas.hiragana,
+    mimi_kara_kotobas.kanji,
+    mimi_kara_kotobas.kanji_id,
+    mimi_kara_kotobas.lesson_id,
+    mimi_kara_kotobas.created_at,
+    mimi_kara_kotobas.updated_at,
+    mimi_kara_kotobas.mean,
+    mimi_kara_kotobas.mean_unsigned,
+    mimi_kara_kotobas.roumaji,
+    mimi_kara_kotobas.tag,
+    mimi_kara_kotobas.stick,
+    mimi_kara_kotobas.audio_link,
+    mimi_kara_kotobas.word_type,
+    mimi_kara_kotobas.example,
+    mimi_kara_kotobas.stt
+FROM mimi_kara_kotobas;

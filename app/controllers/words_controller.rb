@@ -59,7 +59,6 @@ class WordsController < ApplicationController
     key = params[:word]
     id = key.to_i
     id = -1 if id == 0
-    p 'aaa'.hiragana
 
     words = if params[:type] == 'kanji'
       if key.present?
@@ -68,7 +67,7 @@ class WordsController < ApplicationController
         KanjiC.where(level: params[:lesson]).order(id: :asc)
       end
     elsif params[:type] == 'grammar'
-      MimiGrammar.where('title LIKE ? OR title LIKE ? OR mean LIKE ? or example LIKE ? or use LIKE ?', "%#{key}%", "%#{key.hiragana}%", "%#{key}%", "%#{key}%", "%#{key}%")
+      MimiGrammar.distinct.where('title LIKE ? OR title LIKE ? OR mean LIKE ? or example LIKE ? or use LIKE ? or tag LIKE ?', "%#{key}%", "%#{key.hiragana}%", "%#{key}%", "%#{key}%", "%#{key}%","%#{key}%")
     else
       SearchKotoba.where('id = ? OR hiragana LIKE ? OR kanji LIKE ? OR mean LIKE ? OR roumaji LIKE ?', "#{id}", "%#{key}%", "%#{key}%", "%#{key}%", "%#{key}%")
     end

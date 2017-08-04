@@ -18,4 +18,9 @@ class KanjiDamage < ActiveRecord::Base
   def self.find_nil
     where(radical: false).where(vn_mean: nil)
   end
+
+  def sync_level
+    self.level = KanjiC.where('kanji LIKE ?', "%#{self.kanji}%").last.try(:level)
+    save!
+  end
 end
