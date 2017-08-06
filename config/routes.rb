@@ -79,6 +79,12 @@ Rails.application.routes.draw do
     post 'p_audio', on: :collection
     get 'results', on: :collection
   end
+
+  resources :vol_aulms do
+    resources :durations
+  end
+
+
   resources :typings do
     get 'search', on: :collection
   end

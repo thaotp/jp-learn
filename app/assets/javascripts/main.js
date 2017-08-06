@@ -1,5 +1,8 @@
 $(document).ready( function() {
   document.body.onkeyup = function(e){
+    if($('.disable-speak').length > 0){
+      return;
+    }
     if(e.keyCode == 32){
       AudioAnimal.speak()
     }
@@ -84,6 +87,24 @@ $(document).ready( function() {
       sm2BarPlayers[0].actions.play(selectedIndex, {from: +from*1000, to: +to*1000})
     })
   }
+
+  $('.jsProgressA').trigger('click')
+  if ($('.audioChecked').length > 0) {
+    setTimeout(function(){
+      sm2BarPlayers[0].playlistController.select($('.audioChecked')[0])
+    }, 1000);
+  }
+
+  function runByKey(e) {
+    e = e || window.event;
+    if (e.keyCode >= 48 && e.keyCode <= 57) {
+
+    }
+  }
+  if ($('.duration-show').length > 0){
+    document.onkeydown = runByKey;
+  }
+
 
 });
 

@@ -1,0 +1,115 @@
+.container.duration-show.disable-speak
+  .page
+    .page-content
+      .duration-group
+      .row
+        .col-sm-6
+          .form-group
+            %label.control-label{:for => ""} Total
+            %input.form-control{:autocomplete => "off", :id => "jsTotalAudio", :name => "", :type => "text", value: eval(@duration.durations).join(',')}/
+        .col-sm-6
+          .form-group.col-sm-4
+            %label.control-label Option
+            %div
+              .radio-custom.radio-default.radio-inline
+                %input#jsOptionI.jsOption{:name => "option", value: 0, :type => "radio"}/
+                %label{:for => "jsOptionI"} Option I
+              .radio-custom.radio-default.radio-inline
+                %input#jsOptionII.jsOption{:checked => "checked", :name => "option",value: 1, :type => "radio"}/
+                %label{:for => "jsOptionII"} Option II
+            %div
+              .radio-custom.radio-default.radio-inline
+                %input#jsFinshOn.jsFinishEnd{:checked => "checked", :name => "end", :type => "radio", value: 'true'}/
+                %label{:for => "jsFinshOn"} On
+              .radio-custom.radio-default.radio-inline
+                %input#jsFinshOff.jsFinishEnd{:name => "end", :type => "radio", value: 'false'}/
+                %label{:for => "jsFinshOff"} Off
+          .form-group.col-sm-8
+            %label.control-label{:for => ""} &nbsp
+            %button.btn.btn-primary#jsProgress.jsProgressA{:type => "button", :style=>"margin-top: 25px"} Progress
+            %label.control-label{:for => ""} &nbsp
+            %button.btn.btn-primary#jsReset.hidden{:type => "button", :style=>"margin-top: 25px"} Reset
+            %label.control-label{:for => ""} &nbsp
+            %button.btn.btn-primary#jsUp.hidden{:type => "button", :style=>"margin-top: 25px"} Up
+            %label.control-label{:for => ""} &nbsp
+            %button.btn.btn-primary#jsAdd.hidden{:type => "button", :style=>"margin-top: 25px"} Add
+      .row.jsPanel{:style=>"height: 550px;overflow-y: auto; margin-bottom: 250px;", 'data-vol': "#{@vol.id}"}
+        / .col-sm-4.jsSubPanel
+        /   .form-group.col-sm-4
+        /     %label.control-label{:for => ""} First
+        /     %input.form-control{:autocomplete => "off", :id => "", :name => "", :type => "text"}/
+        /   .form-group.col-sm-4
+        /     %label.control-label{:for => ""} Last
+        /     %input.form-control{:autocomplete => "off", :id => "", :name => "", :type => "text"}/
+        /   .form-group.col-sm-2
+        /     %label.control-label &nbsp;
+        /     %button.btn.btn-primary{:type => "button"} Run
+        /   .form-group.col-sm-2
+        /     %label.control-label &nbsp;
+        /     %button.jsDelete.btn.btn-primary{:type => "button"} Delete
+
+
+.sm2-bar-ui.full-width.fixed.playlist-open
+  .bd.sm2-main-controls
+    .sm2-inline-texture
+    .sm2-inline-gradient
+    .sm2-inline-element.sm2-button-element
+      .sm2-button-bd
+        %a.sm2-inline-button.play-pause{:href => "#play"} Play / pause
+    .sm2-inline-element.sm2-inline-status
+      .sm2-playlist
+        .sm2-playlist-target
+          / playlist <ul> + <li> markup will be injected here
+          / if you want default / non-JS content, you can put that here.
+          %noscript
+            %p JavaScript is required.
+      .sm2-progress
+        .sm2-row
+          .sm2-inline-time 0:00
+          .sm2-progress-bd
+            .sm2-progress-track
+              .sm2-progress-bar
+              .sm2-progress-ball
+                .icon-overlay
+          .sm2-inline-duration 0:00
+    .sm2-inline-element.sm2-button-element.sm2-volume
+      .sm2-button-bd
+        %span.sm2-inline-button.sm2-volume-control.volume-shade
+        %a.sm2-inline-button.sm2-volume-control{:href => "#volume"} volume
+    .sm2-inline-element.sm2-button-element
+      .sm2-button-bd
+        %a.sm2-inline-button.previous{:href => "#prev", :title => "Previous"} &lt; previous
+    .sm2-inline-element.sm2-button-element
+      .sm2-button-bd
+        %a.sm2-inline-button.next{:href => "#next", :title => "Next"} &gt; next
+    .sm2-inline-element.sm2-button-element
+      .sm2-button-bd
+        %a.sm2-inline-button.repeat{:href => "#repeat", :title => "Repeat playlist"} ∞ repeat
+    / not implemented
+    /
+      <div class="sm2-inline-element sm2-button-element disabled">
+      <div class="sm2-button-bd">
+      <a href="#shuffle" title="Shuffle" class="sm2-inline-button shuffle">shuffle</a>
+      </div>
+      </div>
+    .sm2-inline-element.sm2-button-element.sm2-menu
+      .sm2-button-bd
+        %a.sm2-inline-button.menu{:href => "#menu"} menu
+  .bd.sm2-playlist-drawer.sm2-element
+    .sm2-inline-texture
+      .sm2-box-shadow
+    / playlist content is mirrored here
+    .sm2-playlist-wrapper
+      %ul.sm2-playlist-bd
+        / item with "download" link
+        - @files.each_with_index do |audio, index|
+          %li{class: "#{'audioChecked' if audio[:name] == @duration.name}"}
+            .sm2-row
+              .sm2-col.sm2-wide
+                %a{:href => audio[:url]}
+                  %b
+                    = audio[:name]
+                  %span.label
+
+:javascript
+
