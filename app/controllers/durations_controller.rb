@@ -5,9 +5,9 @@ class DurationsController < ApplicationController
     @vol = VolAulm.find(params[:vol_aulm_id])
     @duration = Duration.find(params[:id])
     audio = Rails.public_path.join('audio').to_s
-    @files = Dir["#{audio}/#{@vol.name}/*.mp3"].map do |file|
+    @files = Dir["#{audio}/#{@vol.name}/final/*#{@duration.name}"].map do |file|
       name = File.split(file)[1]
-      { url: URI.encode("/audio/#{@vol.name}/#{name}"), name: name}
+      { url: URI.encode("/audio/#{@vol.name}/final/#{name}"), name: name}
     end
   end
 
@@ -19,5 +19,10 @@ class DurationsController < ApplicationController
       name = File.split(file)[1]
       { url: URI.encode("/audio/#{@vol.name}/#{name}"), name: name}
     end
+  end
+
+  def index
+    @vol = VolAulm.find(params[:vol_aulm_id])
+    @durations = @vol.durations
   end
 end

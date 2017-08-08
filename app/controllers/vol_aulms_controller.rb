@@ -19,4 +19,13 @@ class VolAulmsController < ApplicationController
     end
   end
 
+  def final
+    @vol = VolAulm.find(params[:id])
+    audio = Rails.public_path.join('audio').to_s
+    @files = Dir["#{audio}/#{@vol.name}/final/*.mp3"].map do |file|
+      name = File.split(file)[1]
+      { url: URI.encode("/audio/#{@vol.name}/final/#{name}"), name: name}
+    end
+  end
+
 end

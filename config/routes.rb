@@ -82,6 +82,7 @@ Rails.application.routes.draw do
 
   resources :vol_aulms do
     resources :durations
+    get 'final', on: :member
   end
 
 
