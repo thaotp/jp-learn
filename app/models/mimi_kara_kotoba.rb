@@ -114,7 +114,7 @@ class MimiKaraKotoba < ActiveRecord::Base
       elsif el.name == 'h5'
       elsif el.name == 'p' && el.previous_element.name == 'h5'
         vidu = el.text
-      elsif
+      end
       #h4 => name
       #h5 => vi du
       #p => content vidu
@@ -124,11 +124,14 @@ class MimiKaraKotoba < ActiveRecord::Base
   end
 
   private
+
   def set_roumaji
     self.roumaji = self.hiragana.romaji
   end
+
   def set_hanviet
     hanviet = KanjiB.where(sample: kanji).last.try(:hanviet)
     self.cn_mean = hanviet if hanviet.present?
   end
+
 end
