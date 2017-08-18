@@ -39,6 +39,7 @@ group :development, :test do
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+  gem 'kakasi'
 end
 
 gem 'slack-notifier'
@@ -70,4 +71,3 @@ gem 'wkhtmltopdf-binary', '~> 0.12.3'
 gem 'wicked_pdf'
 gem 'enumerize'
 gem 'scenic'
-gem 'kakasi'
