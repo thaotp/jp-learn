@@ -32,7 +32,7 @@ default: &default
   username: THAO-NUS
   password: postgres
   host: localhost
-  database: kanji_b_japanse
+  database: kanji_b_format
 
 kanji_b_japanse: &kanji
   adapter: postgresql
@@ -41,11 +41,11 @@ kanji_b_japanse: &kanji
   username: THAO-NUS
   password: postgres
   host: localhost
-  database: kanji_b_japanse
+  database: kanji_b_format
 
 development:
   <<: *default
-  database: kanji_b_japanse
+  database: kanji_b_format
   # database: dd727lk2t9tlg2
 
 # Warning: The database defined as "test" will be erased and
