@@ -33,21 +33,28 @@
             %button.btn.btn-primary#jsUp.hidden{:type => "button", :style=>"margin-top: 25px"} Up
             %label.control-label{:for => ""} &nbsp
             %button.btn.btn-primary#jsAdd.hidden{:type => "button", :style=>"margin-top: 25px"} Add
-      .row.jsPanel{:style=>"height: 550px;overflow-y: auto; margin-bottom: 250px;", 'data-vol': "#{@vol.id}"}
-        / .col-sm-4.jsSubPanel
-        /   .form-group.col-sm-4
-        /     %label.control-label{:for => ""} First
-        /     %input.form-control{:autocomplete => "off", :id => "", :name => "", :type => "text"}/
-        /   .form-group.col-sm-4
-        /     %label.control-label{:for => ""} Last
-        /     %input.form-control{:autocomplete => "off", :id => "", :name => "", :type => "text"}/
-        /   .form-group.col-sm-2
-        /     %label.control-label &nbsp;
-        /     %button.btn.btn-primary{:type => "button"} Run
-        /   .form-group.col-sm-2
-        /     %label.control-label &nbsp;
-        /     %button.jsDelete.btn.btn-primary{:type => "button"} Delete
+            %label.control-label{:for => ""} &nbsp
+            %button.btn.btn-primary{"aria-controls" => "collapseScript", "aria-expanded" => "true", "data-target" => "#collapseScript", "data-toggle" => "collapse", :type => "button", :style=>"margin-top: 25px"} Collapse Script
 
+      .col-sm-12
+        #collapseScript.collapse
+          .well
+            = image_tag("/audio/Nameraka_Nihongo_Kaiwa_CD/image/#{@duration.name.split('.')[0]}.png", class: 'img-responsive', :'width' => '600')
+      .col-sm-12
+        .row.jsPanel{:style=>"height: 550px;overflow-y: auto; margin-bottom: 250px;", 'data-vol': "#{@vol.id}"}
+          / .col-sm-4.jsSubPanel
+          /   .form-group.col-sm-4
+          /     %label.control-label{:for => ""} First
+          /     %input.form-control{:autocomplete => "off", :id => "", :name => "", :type => "text"}/
+          /   .form-group.col-sm-4
+          /     %label.control-label{:for => ""} Last
+          /     %input.form-control{:autocomplete => "off", :id => "", :name => "", :type => "text"}/
+          /   .form-group.col-sm-2
+          /     %label.control-label &nbsp;
+          /     %button.btn.btn-primary{:type => "button"} Run
+          /   .form-group.col-sm-2
+          /     %label.control-label &nbsp;
+          /     %button.jsDelete.btn.btn-primary{:type => "button"} Delete
 
 .sm2-bar-ui.full-width.fixed.playlist-open
   .bd.sm2-main-controls
