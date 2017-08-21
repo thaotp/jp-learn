@@ -102,6 +102,12 @@ class Duration < ActiveRecord::Base
     #Remove file
     `rm #{practice_folder}/*.mp3`
     `rm #{silent_folder}/*.mp3`
+    create_full_crop_file
+  end
+
+  def create_full_crop_file
+    origin_folder = "public/audio/#{self.vol_aulm.name}"
+    `ffmpeg -i #{origin_folder}/#{name} -ss #{eval(durations)[0]} -to #{eval(durations)[-1]} -c copy #{origin_folder}/final/#{name}`
   end
 
   private
