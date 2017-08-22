@@ -1,0 +1,26 @@
+ffmpeg -i public/audio/Nameraka_Nihongo_Kaiwa_CD/10_Track_10.mp3 -ss 11 -to 12.6 -c copy public/audio/Nameraka_Nihongo_Kaiwa_CD/practice/11_12.6.mp3
+ffmpeg -i public/audio/silence.mp3 -ss 11 -to 14.2 -c copy public/audio/Nameraka_Nihongo_Kaiwa_CD/silent/11_12.6.mp3 
+ffmpeg -i public/audio/Nameraka_Nihongo_Kaiwa_CD/10_Track_10.mp3 -ss 12.6 -to 14.4 -c copy public/audio/Nameraka_Nihongo_Kaiwa_CD/practice/12.6_14.4.mp3
+ffmpeg -i public/audio/silence.mp3 -ss 12.6 -to 16.200000000000003 -c copy public/audio/Nameraka_Nihongo_Kaiwa_CD/silent/12.6_14.4.mp3 
+ffmpeg -i public/audio/Nameraka_Nihongo_Kaiwa_CD/10_Track_10.mp3 -ss 14.4 -to 16 -c copy public/audio/Nameraka_Nihongo_Kaiwa_CD/practice/14.4_16.mp3
+ffmpeg -i public/audio/silence.mp3 -ss 14.4 -to 17.6 -c copy public/audio/Nameraka_Nihongo_Kaiwa_CD/silent/14.4_16.mp3 
+ffmpeg -i public/audio/Nameraka_Nihongo_Kaiwa_CD/10_Track_10.mp3 -ss 16 -to 19.7 -c copy public/audio/Nameraka_Nihongo_Kaiwa_CD/practice/16_19.7.mp3
+ffmpeg -i public/audio/silence.mp3 -ss 16 -to 23.4 -c copy public/audio/Nameraka_Nihongo_Kaiwa_CD/silent/16_19.7.mp3 
+ffmpeg -i public/audio/Nameraka_Nihongo_Kaiwa_CD/10_Track_10.mp3 -ss 19.7 -to 23.2 -c copy public/audio/Nameraka_Nihongo_Kaiwa_CD/practice/19.7_23.2.mp3
+ffmpeg -i public/audio/silence.mp3 -ss 19.7 -to 26.7 -c copy public/audio/Nameraka_Nihongo_Kaiwa_CD/silent/19.7_23.2.mp3 
+ffmpeg -i public/audio/Nameraka_Nihongo_Kaiwa_CD/10_Track_10.mp3 -ss 23.2 -to 24.6 -c copy public/audio/Nameraka_Nihongo_Kaiwa_CD/practice/23.2_24.6.mp3
+ffmpeg -i public/audio/silence.mp3 -ss 23.2 -to 26.000000000000004 -c copy public/audio/Nameraka_Nihongo_Kaiwa_CD/silent/23.2_24.6.mp3 
+ffmpeg -i public/audio/Nameraka_Nihongo_Kaiwa_CD/10_Track_10.mp3 -ss 24.6 -to 25.6 -c copy public/audio/Nameraka_Nihongo_Kaiwa_CD/practice/24.6_25.6.mp3
+ffmpeg -i public/audio/silence.mp3 -ss 24.6 -to 26.6 -c copy public/audio/Nameraka_Nihongo_Kaiwa_CD/silent/24.6_25.6.mp3 
+ffmpeg -i public/audio/Nameraka_Nihongo_Kaiwa_CD/10_Track_10.mp3 -ss 25.6 -to 29 -c copy public/audio/Nameraka_Nihongo_Kaiwa_CD/practice/25.6_29.mp3
+ffmpeg -i public/audio/silence.mp3 -ss 25.6 -to 32.4 -c copy public/audio/Nameraka_Nihongo_Kaiwa_CD/silent/25.6_29.mp3 
+ffmpeg -i public/audio/Nameraka_Nihongo_Kaiwa_CD/10_Track_10.mp3 -ss 29 -to 32.3 -c copy public/audio/Nameraka_Nihongo_Kaiwa_CD/practice/29_32.3.mp3
+ffmpeg -i public/audio/silence.mp3 -ss 29 -to 35.599999999999994 -c copy public/audio/Nameraka_Nihongo_Kaiwa_CD/silent/29_32.3.mp3 
+ffmpeg -i public/audio/Nameraka_Nihongo_Kaiwa_CD/10_Track_10.mp3 -ss 32.3 -to 36.5 -c copy public/audio/Nameraka_Nihongo_Kaiwa_CD/practice/32.3_36.5.mp3
+ffmpeg -i public/audio/silence.mp3 -ss 32.3 -to 40.7 -c copy public/audio/Nameraka_Nihongo_Kaiwa_CD/silent/32.3_36.5.mp3 
+ffmpeg -i public/audio/Nameraka_Nihongo_Kaiwa_CD/10_Track_10.mp3 -ss 36.5 -to 38.2 -c copy public/audio/Nameraka_Nihongo_Kaiwa_CD/practice/36.5_38.2.mp3
+ffmpeg -i public/audio/silence.mp3 -ss 36.5 -to 39.900000000000006 -c copy public/audio/Nameraka_Nihongo_Kaiwa_CD/silent/36.5_38.2.mp3 
+ffmpeg -i public/audio/Nameraka_Nihongo_Kaiwa_CD/10_Track_10.mp3 -ss 38.2 -to 42.7 -c copy public/audio/Nameraka_Nihongo_Kaiwa_CD/practice/38.2_42.7.mp3
+ffmpeg -i public/audio/silence.mp3 -ss 38.2 -to 47.2 -c copy public/audio/Nameraka_Nihongo_Kaiwa_CD/silent/38.2_42.7.mp3 
+ffmpeg -i public/click.mp3 -i public/audio/Nameraka_Nihongo_Kaiwa_CD/practice/11_12.6.mp3 -i public/audio/Nameraka_Nihongo_Kaiwa_CD/silent/12.6_14.4.mp3 -i public/audio/Nameraka_Nihongo_Kaiwa_CD/practice/14.4_16.mp3 -i public/audio/Nameraka_Nihongo_Kaiwa_CD/silent/16_19.7.mp3 -i public/audio/Nameraka_Nihongo_Kaiwa_CD/practice/19.7_23.2.mp3 -i public/audio/Nameraka_Nihongo_Kaiwa_CD/silent/23.2_24.6.mp3 -i public/audio/Nameraka_Nihongo_Kaiwa_CD/practice/24.6_25.6.mp3 -i public/audio/Nameraka_Nihongo_Kaiwa_CD/silent/25.6_29.mp3 -i public/audio/Nameraka_Nihongo_Kaiwa_CD/practice/29_32.3.mp3 -i public/audio/Nameraka_Nihongo_Kaiwa_CD/silent/32.3_36.5.mp3 -i public/audio/Nameraka_Nihongo_Kaiwa_CD/practice/36.5_38.2.mp3 -i public/audio/Nameraka_Nihongo_Kaiwa_CD/silent/38.2_42.7.mp3  -filter_complex '[0:0][1:0][2:0][3:0][4:0][5:0][6:0][7:0][8:0][9:0][10:0][11:0][12:0]concat=n=13:v=0:a=1[out]' -map '[out]' public/audio/Nameraka_Nihongo_Kaiwa_CD/final/A_10_Track_10.mp3
+ffmpeg -i public/click.mp3 -i public/audio/Nameraka_Nihongo_Kaiwa_CD/silent/11_12.6.mp3 -i public/audio/Nameraka_Nihongo_Kaiwa_CD/practice/12.6_14.4.mp3 -i public/audio/Nameraka_Nihongo_Kaiwa_CD/silent/14.4_16.mp3 -i public/audio/Nameraka_Nihongo_Kaiwa_CD/practice/16_19.7.mp3 -i public/audio/Nameraka_Nihongo_Kaiwa_CD/silent/19.7_23.2.mp3 -i public/audio/Nameraka_Nihongo_Kaiwa_CD/practice/23.2_24.6.mp3 -i public/audio/Nameraka_Nihongo_Kaiwa_CD/silent/24.6_25.6.mp3 -i public/audio/Nameraka_Nihongo_Kaiwa_CD/practice/25.6_29.mp3 -i public/audio/Nameraka_Nihongo_Kaiwa_CD/silent/29_32.3.mp3 -i public/audio/Nameraka_Nihongo_Kaiwa_CD/practice/32.3_36.5.mp3 -i public/audio/Nameraka_Nihongo_Kaiwa_CD/silent/36.5_38.2.mp3 -i public/audio/Nameraka_Nihongo_Kaiwa_CD/practice/38.2_42.7.mp3  -filter_complex '[0:0][1:0][2:0][3:0][4:0][5:0][6:0][7:0][8:0][9:0][10:0][11:0][12:0]concat=n=13:v=0:a=1[out]' -map '[out]' public/audio/Nameraka_Nihongo_Kaiwa_CD/final/B_10_Track_10.mp3
