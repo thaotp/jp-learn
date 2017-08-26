@@ -100,29 +100,6 @@ class MimiKaraKotoba < ActiveRecord::Base
     # self.save
   end
 
-  #http://tuhoconline.net/tu-vung-n3-sach-mimi-kara-oboeru-67.html
-  def fetch_tuhoconline
-    url = 'http://tuhoconline.net/tu-vung-n3-sach-mimi-kara-oboeru-67.html'
-    page = Nokogiri::HTML(open(url))
-    data = {}
-    pre_el = nil
-    4.upto(80).each do |num|
-      el = page.css('.entry-content')[0].element_children[num]
-      next if el.values == ["quangcao"] || el.values == ["javascript"] || el.values == ["noidungcopy"] || el.name == "script"
-      if el.name == 'h4'
-        title = el.text
-      elsif el.name == 'h5'
-      elsif el.name == 'p' && el.previous_element.name == 'h5'
-        vidu = el.text
-      end
-      #h4 => name
-      #h5 => vi du
-      #p => content vidu
-      #h5 => tu tuong tu
-      #p => tu tuong tu content
-    end
-  end
-
   private
 
   def set_roumaji

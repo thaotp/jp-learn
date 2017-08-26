@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170413070545) do
+ActiveRecord::Schema.define(version: 20170826011914) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -215,6 +215,19 @@ ActiveRecord::Schema.define(version: 20170413070545) do
     t.integer  "mimi_kara_kotoba_id"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
+    t.integer  "position"
+  end
+
+  create_table "mimi_examples", force: :cascade do |t|
+    t.string   "title"
+    t.string   "example"
+    t.string   "mean"
+    t.string   "position"
+    t.string   "page"
+    t.integer  "mimi_kara_kotoba_id"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+    t.integer  "level"
   end
 
   create_table "mimi_grammars", force: :cascade do |t|
@@ -428,6 +441,7 @@ ActiveRecord::Schema.define(version: 20170413070545) do
   end
 
   add_foreign_key "mimi_example_kotobas", "mimi_kara_kotobas"
+  add_foreign_key "mimi_examples", "mimi_kara_kotobas"
 
   create_view :search_kotobas,  sql_definition: <<-SQL
       SELECT 'mina_kotoba'::text AS type,
