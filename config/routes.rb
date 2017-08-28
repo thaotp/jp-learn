@@ -90,6 +90,9 @@ Rails.application.routes.draw do
     get 'search', on: :collection
   end
 
+  resources :mimi_examples do
+    post 'match', on: :member
+  end
   resources :nichibeis
   resources :kanji_damages
   resources :editations

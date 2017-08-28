@@ -1,4 +1,5 @@
 class MimiExample < ActiveRecord::Base
+  self.per_page = 10
   validates :title, presence: true
   #http://tuhoconline.net/tu-vung-n3-sach-mimi-kara-oboeru-67.html
   def self.fetch_tuhoconline_all
@@ -10,6 +11,7 @@ class MimiExample < ActiveRecord::Base
 
   # page 1 Nội dung này được copy
   # page 3, 30 - 40 str[/(?<=\nTừ vựng N3 sách mimi kara oboeru #{number}\n)[\s\S]*(?=Những từ vựng)/]
+  # page 85, 86 [/(?<=\n Ví dụ : \n)[\s\S]*(?=\n)/]
   def self.fetch_tuhoconline number
     url = "http://tuhoconline.net/tu-vung-n3-sach-mimi-kara-oboeru-#{number}.html"
     page = Nokogiri::HTML(open(url))
@@ -51,6 +53,7 @@ class MimiExample < ActiveRecord::Base
       {title:title, example: re[0], mean: re[1], position: position, page: page}
     end
     create! records
+    MimiExample.where(example: "\"\";\r").delete_all
   end
 
 end

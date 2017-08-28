@@ -1,0 +1,44 @@
+%p#notice= notice
+%h1 Listing Mimi Examples
+= will_paginate @mimi_examples
+.wrapper{style: "font-size: 17px; color: black;"}
+  %div{style: "height: 50px;"}
+    #results{style: "height: 50px;font-size: 30px;text-align: center;"}
+  - @mimi_examples.group_by(&:title).each_with_index do |mimi_examples, index|
+    .row
+      .col-sm-12
+        %h2
+          = index + 1
+          \.
+          = mimi_examples[0]
+    - mimi_examples[1].each_with_index do |mimi_example, index|
+      .row
+        .col-sm-1
+          = mimi_example.position
+        .col-sm-4
+          .row
+            .col-sm-12
+              = mimi_example.example
+            .col-sm-12
+              = mimi_example.mean
+        .col-sm-7
+          .row
+            .col-sm-12
+              = mimi_example.mean
+            .col-sm-12
+              = form_tag(match_mimi_example_path(mimi_example.id), id: "#{mimi_example.id}", method: :post, remote: true ) do
+                = text_field_tag :example, nil, class: 'mimi_example_text_field_tag'
+        .col-sm-12
+          / = link_to 'Show', mimi_example
+          /= link_to 'Edit', edit_mimi_example_path(mimi_example)
+          / = link_to 'Destroy', mimi_example, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br/
+= link_to 'New Mimi example', new_mimi_example_path
+
+:javascript
+  $('form input').keypress(function(e) {
+    if(e.which == 13){
+      $(this).closest('form').submit();
+    }
+  });

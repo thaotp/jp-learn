@@ -1,0 +1,17 @@
+<%= form_for(@mimi_example) do |f| %>
+  <% if @mimi_example.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@mimi_example.errors.count, "error") %> prohibited this mimi_example from being saved:</h2>
+
+      <ul>
+      <% @mimi_example.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

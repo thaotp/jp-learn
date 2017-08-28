@@ -1,0 +1,4 @@
+$('#results').html("<%= @result %>").fadeIn(3000).promise().done(function(){
+     $('#results').fadeOut(1000);
+ });
+$("form#<%= @mimi_example.id %> input").val('')
